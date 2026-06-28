@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加新書 · 古籍閱讀器</title>
+  <style>
+    :root {
+      --viewport-bg: #F5F1E6;
+      --paper-surface: #FFFDF8;
+      --ink-primary: #000000;
+      --ink-muted: #5F574F;
+      --accent-cinnabar: #9B3D3D;
+      --accent-mineral: #3D5A6E;
+      --font-serif: "Huiwen-mincho", "汇文明朝体", "cwTeX 明體", "cwTeXMing", "HanWangMingMedium", "王漢宗中明體繁", "Songti SC", STSong, SimSun, "Noto Serif TC", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--viewport-bg);
+      color: var(--ink-primary);
+      font-family: var(--font-serif);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .workbench {
+      width: min(720px, 100%);
+      border: 3px solid #000;
+      padding: 5px;
+      background: var(--paper-surface);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .workbench-inner {
+      border: 1px solid #000;
+      padding: 28px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid #000;
+      padding-bottom: 18px;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+    }
+
+    .back-link,
+    button {
+      appearance: none;
+      border: 1px solid #000;
+      border-radius: 0;
+      background: var(--paper-surface);
+      color: #000;
+      cursor: pointer;
+      font: 14px/1 var(--font-serif);
+      letter-spacing: 0.04em;
+      padding: 8px 12px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    button.primary {
+      background: #000;
+      color: var(--paper-surface);
+    }
+
+    button:disabled {
+      border-color: #8A8278;
+      color: #8A8278;
+      cursor: default;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .fallback-input {
+      display: none;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: var(--ink-muted);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    input,
+    select {
+      width: 100%;
+      border: 1px solid #000;
+      border-radius: 0;
+      background: var(--paper-surface);
+      color: #000;
+      font: 15px/1.4 var(--font-serif);
+      padding: 8px 10px;
+    }
+
+    .file-list {
+      border-top: 1px solid rgba(0, 0, 0, 0.28);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.28);
+      margin: 18px 0;
+      padding: 12px 0;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 8px 0;
+      font-size: 14px;
+    }
+
+    .file-row + .file-row {
+      border-top: 1px solid rgba(0, 0, 0, 0.14);
+    }
+
+    .muted {
+      color: var(--ink-muted);
+    }
+
+    .status {
+      min-height: 22px;
+      color: var(--accent-mineral);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-top: 12px;
+      white-space: pre-wrap;
+    }
+
+    .status.error {
+      color: var(--accent-cinnabar);
+    }
+
+    pre {
+      overflow: auto;
+      border: 1px solid #000;
+      background: #fffaf0;
+      padding: 12px;
+      font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px;
+      }
+
+      .workbench-inner {
+        padding: 18px;
+      }
+
+      .topline,
+      .form-grid {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="workbench">
+    <div class="workbench-inner">
+      <div class="topline">
+        <h1>添加新書</h1>
+        <a class="back-link" href="./first-chapter-reader.html">返回書頁</a>
+      </div>
+
+      <div class="controls">
+        <button id="pickFolder" class="primary" type="button">選擇新書資料夾</button>
+        <button id="pickFallback" type="button">選擇資料夾檔案</button>
+        <input id="folderInput" class="fallback-input" type="file" webkitdirectory multiple accept=".md,.markdown,text/markdown,text/plain">
+      </div>
+
+      <div class="form-grid">
+        <label>
+          書名
+          <input id="bookTitle" type="text" autocomplete="off" placeholder="例如：十景緞">
+        </label>
+        <label>
+          Slug
+          <input id="bookSlug" type="text" autocomplete="off" placeholder="例如：shijinduan">
+        </label>
+        <label>
+          起始章
+          <input id="startChapter" type="number" min="1" value="1">
+        </label>
+        <label>
+          生成章數
+          <input id="chapterLimit" type="number" min="1" placeholder="留空表示全部">
+        </label>
+      </div>
+
+      <label>
+        Markdown 文件
+        <select id="fileSelect"></select>
+      </label>
+
+      <section id="fileList" class="file-list muted">尚未選擇資料夾。</section>
+
+      <div class="controls">
+        <button id="generateBook" class="primary" type="button" disabled>生成正式書頁</button>
+        <button id="copyCommand" type="button" disabled>複製命令</button>
+      </div>
+
+      <pre id="commandPreview">選擇資料夾後會生成導入命令。</pre>
+      <div id="status" class="status"></div>
+    </div>
+  </main>
+
+  <script>
+    const state = {
+      folderName: '',
+      files: [],
+    };
+
+    const els = {
+      pickFolder: document.getElementById('pickFolder'),
+      pickFallback: document.getElementById('pickFallback'),
+      folderInput: document.getElementById('folderInput'),
+      bookTitle: document.getElementById('bookTitle'),
+      bookSlug: document.getElementById('bookSlug'),
+      startChapter: document.getElementById('startChapter'),
+      chapterLimit: document.getElementById('chapterLimit'),
+      fileSelect: document.getElementById('fileSelect'),
+      fileList: document.getElementById('fileList'),
+      generateBook: document.getElementById('generateBook'),
+      copyCommand: document.getElementById('copyCommand'),
+      commandPreview: document.getElementById('commandPreview'),
+      status: document.getElementById('status'),
+    };
+
+    function setStatus(message, isError = false) {
+      els.status.textContent = message;
+      els.status.classList.toggle('error', isError);
+    }
+
+    function countChapters(text) {
+      return (text.match(/^#{2,6}\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\s*.*$/gmu) || []).length;
+    }
+
+    function fileTitle(name) {
+      return name.replace(/\.(?:md|markdown)$/i, '').replace(/[_-]+/g, ' ').trim();
+    }
+
+    function slugify(value) {
+      const slug = value
+        .normalize('NFKD')
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .toLowerCase()
+        .replace(/[\s_]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      return slug || `book-${Date.now()}`;
+    }
+
+    async function scanDirectory(handle, prefix = '') {
+      const files = [];
+      for await (const [name, child] of handle.entries()) {
+        if (child.kind === 'directory') {
+          files.push(...await scanDirectory(child, `${prefix}${name}/`));
+          continue;
+        }
+        if (!/\.(?:md|markdown)$/i.test(name)) continue;
+        const file = await child.getFile();
+        const text = await file.text();
+        files.push({
+          name: `${prefix}${name}`,
+          size: file.size,
+          modified: file.lastModified,
+          chapters: countChapters(text),
+          text,
+        });
+      }
+      return files;
+    }
+
+    async function chooseDirectory() {
+      if (!window.showDirectoryPicker) {
+        els.folderInput.click();
+        return;
+      }
+      try {
+        const handle = await window.showDirectoryPicker({ mode: 'read' });
+        state.folderName = handle.name;
+        state.files = await scanDirectory(handle);
+        renderSelection();
+      } catch (error) {
+        if (error.name !== 'AbortError') setStatus(error.message || String(error), true);
+      }
+    }
+
+    async function chooseFallbackFiles(event) {
+      const files = Array.from(event.target.files || []).filter((file) => /\.(?:md|markdown)$/i.test(file.name));
+      state.folderName = files[0]?.webkitRelativePath?.split('/')[0] || '新書';
+      state.files = await Promise.all(files.map(async (file) => ({
+        name: file.webkitRelativePath || file.name,
+        size: file.size,
+        modified: file.lastModified,
+        chapters: countChapters(await file.text()),
+        text: await file.text(),
+      })));
+      renderSelection();
+    }
+
+    function selectedFile() {
+      return state.files[Number.parseInt(els.fileSelect.value || '0', 10)];
+    }
+
+    function currentCommand() {
+      const file = selectedFile();
+      const title = els.bookTitle.value.trim() || fileTitle(file?.name || state.folderName || '新書');
+      const slug = els.bookSlug.value.trim() || slugify(title);
+      const start = els.startChapter.value || '1';
+      const limit = els.chapterLimit.value;
+      const source = `/完整路徑/${file?.name || 'book.md'}`;
+      return [
+        'node tools/import-book.js',
+        `--source "${source}"`,
+        `--title "${title}"`,
+        `--slug "${slug}"`,
+        `--start ${start}`,
+        limit ? `--limit ${limit}` : '',
+        '--sync-existing',
+      ].filter(Boolean).join(' ');
+    }
+
+    function renderSelection() {
+      state.files.sort((a, b) => b.chapters - a.chapters || b.size - a.size);
+      els.fileSelect.replaceChildren(...state.files.map((file, index) => {
+        const option = document.createElement('option');
+        option.value = String(index);
+        option.textContent = `${file.name} · ${file.chapters} 章`;
+        return option;
+      }));
+
+      const first = state.files[0];
+      if (first) {
+        els.bookTitle.value = fileTitle(state.folderName || first.name);
+        els.bookSlug.value = slugify(els.bookTitle.value);
+      }
+
+      els.fileList.classList.toggle('muted', state.files.length === 0);
+      els.fileList.innerHTML = state.files.length
+        ? state.files.map((file) => `<div class="file-row"><span>${file.name}</span><span>${file.chapters} 章</span></div>`).join('')
+        : '資料夾內沒有可用 Markdown。';
+
+      els.generateBook.disabled = state.files.length === 0;
+      els.copyCommand.disabled = state.files.length === 0;
+      updateCommand();
+      setStatus(state.files.length ? `已讀取「${state.folderName}」：${state.files.length} 個 Markdown。` : '沒有找到 Markdown。', state.files.length === 0);
+    }
+
+    function updateCommand() {
+      els.commandPreview.textContent = state.files.length ? currentCommand() : '選擇資料夾後會生成導入命令。';
+    }
+
+    async function generateBook() {
+      const file = selectedFile();
+      if (!file) return;
+      const payload = {
+        title: els.bookTitle.value.trim() || fileTitle(file.name),
+        slug: els.bookSlug.value.trim() || slugify(els.bookTitle.value || file.name),
+        fileName: file.name,
+        content: file.text,
+        start: els.startChapter.value || '1',
+        limit: els.chapterLimit.value,
+        syncExisting: true,
+      };
+
+      const apiBase = window.location.protocol === 'file:' ? 'http://127.0.0.1:8787' : '';
+      try {
+        setStatus('正在提交到本機製作流程...');
+        const response = await fetch(`${apiBase}/api/import-book`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || '生成失敗');
+        setStatus(`${result.message}\n${result.output}`);
+      } catch (error) {
+        setStatus(`無法直接生成。請先啟動本機工作台，或使用下方命令。\n${error.message || error}`, true);
+      }
+    }
+
+    async function copyCommand() {
+      await navigator.clipboard.writeText(currentCommand());
+      setStatus('已複製導入命令。');
+    }
+
+    function loadPendingImport() {
+      const error = window.sessionStorage.getItem('pendingBookImportError');
+      if (error) {
+        window.sessionStorage.removeItem('pendingBookImportError');
+        setStatus(error, true);
+      }
+
+      const pending = window.sessionStorage.getItem('pendingBookImport');
+      if (!pending) return;
+      window.sessionStorage.removeItem('pendingBookImport');
+      try {
+        const parsed = JSON.parse(pending);
+        state.folderName = parsed.folderName || '新書';
+        state.files = Array.isArray(parsed.files) ? parsed.files : [];
+        renderSelection();
+      } catch (error) {
+        setStatus(error.message || String(error), true);
+      }
+    }
+
+    els.pickFolder.addEventListener('click', chooseDirectory);
+    els.pickFallback.addEventListener('click', () => els.folderInput.click());
+    els.folderInput.addEventListener('change', chooseFallbackFiles);
+    els.fileSelect.addEventListener('change', updateCommand);
+    els.bookTitle.addEventListener('input', () => {
+      if (!els.bookSlug.dataset.touched) els.bookSlug.value = slugify(els.bookTitle.value);
+      updateCommand();
+    });
+    els.bookSlug.addEventListener('input', () => {
+      els.bookSlug.dataset.touched = 'true';
+      updateCommand();
+    });
+    els.startChapter.addEventListener('input', updateCommand);
+    els.chapterLimit.addEventListener('input', updateCommand);
+    els.generateBook.addEventListener('click', generateBook);
+    els.copyCommand.addEventListener('click', copyCommand);
+
+    loadPendingImport();
+  </script>
+</body>
+</html>

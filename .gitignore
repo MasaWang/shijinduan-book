@@ -1,0 +1,5 @@
+.DS_Store
+.obsidian/
+.reader-server.pid
+*.log
+node_modules/

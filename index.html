@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古籍閱讀器</title>
+  <style>
+    :root {
+      --viewport-bg: #F5F1E6;
+      --paper-surface: #FFFDF8;
+      --ink-primary: #000000;
+      --font-serif: "Huiwen-mincho", "汇文明朝体", "Songti SC", STSong, serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--viewport-bg);
+      color: var(--ink-primary);
+      font-family: var(--font-serif);
+      padding: 24px;
+    }
+
+    main {
+      width: min(420px, 100%);
+      background: var(--paper-surface);
+      border: 3px solid #000;
+      padding: 32px 28px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      font-weight: 600;
+      writing-mode: vertical-rl;
+      height: 120px;
+      letter-spacing: 0.08em;
+    }
+
+    .layout {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    p {
+      margin: 0 0 20px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li + li { margin-top: 12px; }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      border-bottom: 1px solid #000;
+      font-size: 17px;
+    }
+
+    a:hover { opacity: 0.72; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <h1>古籍閱讀器</h1>
+      <div>
+        <p>豎排紙本風格閱讀。選擇書目進入。</p>
+        <ul>
+          <li><a href="./jinpingmei-000-reader.html">金瓶梅詞話</a></li>
+          <li><a href="./shijinduan-000-reader.html">十景緞</a></li>
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
