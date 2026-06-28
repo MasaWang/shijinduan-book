@@ -36,10 +36,8 @@ shijinduan-book/
 | `books.json` | 書庫與章回清單，自動化生成與側欄同步依此執行 |
 | `preview.html` | 設計系統預覽頁 |
 | `ancient_book-v2.html` | 正式版視覺樣張 |
-| `first-chapter-reader.html` | 《十景緞》第一回正式閱讀版 |
-| `second-chapter-reader.html` | 《十景緞》第二回正式閱讀版 |
-| `third-chapter-reader.html` | 《十景緞》第三回正式閱讀版 |
-| `fourth-chapter-reader.html` | 《十景緞》第四回正式閱讀版 |
+| `books/shijinduan/` | 《十景緞》正式閱讀版 |
+| `books/jinpingmei/` | 《金瓶梅詞話》正式閱讀版 |
 | `tools/import-book.js` | 從 Markdown 導入新書並生成 reader/data |
 | `tools/verify-readers.js` | 自查 reader/data 是否符合基本規則 |
 | `import-book.html` | 添加新書工作台 |
