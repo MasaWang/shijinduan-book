@@ -1,0 +1,344 @@
+{
+  "title": "十景緞",
+  "slug": "shijinduan",
+  "source": "../十景緞_繁體書稿版.md",
+  "entry": "books/shijinduan/shijinduan-000-reader.html",
+  "chapters": [
+    {
+      "id": "000",
+      "title": "前言與序跋",
+      "reader": "books/shijinduan/shijinduan-000-reader.html",
+      "data": "books/shijinduan/data/shijinduan-000-data.js"
+    },
+    {
+      "id": "001",
+      "title": "第一回 出山",
+      "reader": "books/shijinduan/shijinduan-001-reader.html",
+      "data": "books/shijinduan/data/shijinduan-001-data.js"
+    },
+    {
+      "id": "002",
+      "title": "第二回 初遇",
+      "reader": "books/shijinduan/shijinduan-002-reader.html",
+      "data": "books/shijinduan/data/shijinduan-002-data.js"
+    },
+    {
+      "id": "003",
+      "title": "第三回 邂逅",
+      "reader": "books/shijinduan/shijinduan-003-reader.html",
+      "data": "books/shijinduan/data/shijinduan-003-data.js"
+    },
+    {
+      "id": "004",
+      "title": "第四回 佳人",
+      "reader": "books/shijinduan/shijinduan-004-reader.html",
+      "data": "books/shijinduan/data/shijinduan-004-data.js"
+    },
+    {
+      "id": "005",
+      "title": "第五回 思君",
+      "reader": "books/shijinduan/shijinduan-005-reader.html",
+      "data": "books/shijinduan/data/shijinduan-005-data.js"
+    },
+    {
+      "id": "006",
+      "title": "第六回 慕容",
+      "reader": "books/shijinduan/shijinduan-006-reader.html",
+      "data": "books/shijinduan/data/shijinduan-006-data.js"
+    },
+    {
+      "id": "007",
+      "title": "第七回 並調",
+      "reader": "books/shijinduan/shijinduan-007-reader.html",
+      "data": "books/shijinduan/data/shijinduan-007-data.js"
+    },
+    {
+      "id": "008",
+      "title": "第八回 邪曲",
+      "reader": "books/shijinduan/shijinduan-008-reader.html",
+      "data": "books/shijinduan/data/shijinduan-008-data.js"
+    },
+    {
+      "id": "009",
+      "title": "第九回 偷窺",
+      "reader": "books/shijinduan/shijinduan-009-reader.html",
+      "data": "books/shijinduan/data/shijinduan-009-data.js"
+    },
+    {
+      "id": "010",
+      "title": "第十回 受制",
+      "reader": "books/shijinduan/shijinduan-010-reader.html",
+      "data": "books/shijinduan/data/shijinduan-010-data.js"
+    },
+    {
+      "id": "011",
+      "title": "第十一回 寒功",
+      "reader": "books/shijinduan/shijinduan-011-reader.html",
+      "data": "books/shijinduan/data/shijinduan-011-data.js"
+    },
+    {
+      "id": "012",
+      "title": "第十二回 夜探",
+      "reader": "books/shijinduan/shijinduan-012-reader.html",
+      "data": "books/shijinduan/data/shijinduan-012-data.js"
+    },
+    {
+      "id": "013",
+      "title": "第十三回 再會",
+      "reader": "books/shijinduan/shijinduan-013-reader.html",
+      "data": "books/shijinduan/data/shijinduan-013-data.js"
+    },
+    {
+      "id": "014",
+      "title": "第十四回 巾幗",
+      "reader": "books/shijinduan/shijinduan-014-reader.html",
+      "data": "books/shijinduan/data/shijinduan-014-data.js"
+    },
+    {
+      "id": "015",
+      "title": "第十五回 迷藥",
+      "reader": "books/shijinduan/shijinduan-015-reader.html",
+      "data": "books/shijinduan/data/shijinduan-015-data.js"
+    },
+    {
+      "id": "016",
+      "title": "第十六回 激戰",
+      "reader": "books/shijinduan/shijinduan-016-reader.html",
+      "data": "books/shijinduan/data/shijinduan-016-data.js"
+    },
+    {
+      "id": "017",
+      "title": "第十七回 遊鬥",
+      "reader": "books/shijinduan/shijinduan-017-reader.html",
+      "data": "books/shijinduan/data/shijinduan-017-data.js"
+    },
+    {
+      "id": "018",
+      "title": "第十八回 爭持",
+      "reader": "books/shijinduan/shijinduan-018-reader.html",
+      "data": "books/shijinduan/data/shijinduan-018-data.js"
+    },
+    {
+      "id": "019",
+      "title": "第十九回 斷指",
+      "reader": "books/shijinduan/shijinduan-019-reader.html",
+      "data": "books/shijinduan/data/shijinduan-019-data.js"
+    },
+    {
+      "id": "020",
+      "title": "第二十回 師門",
+      "reader": "books/shijinduan/shijinduan-020-reader.html",
+      "data": "books/shijinduan/data/shijinduan-020-data.js"
+    },
+    {
+      "id": "021",
+      "title": "第二十一回 大敵",
+      "reader": "books/shijinduan/shijinduan-021-reader.html",
+      "data": "books/shijinduan/data/shijinduan-021-data.js"
+    },
+    {
+      "id": "022",
+      "title": "第二十二回 虎威",
+      "reader": "books/shijinduan/shijinduan-022-reader.html",
+      "data": "books/shijinduan/data/shijinduan-022-data.js"
+    },
+    {
+      "id": "023",
+      "title": "第二十三回 闖陵",
+      "reader": "books/shijinduan/shijinduan-023-reader.html",
+      "data": "books/shijinduan/data/shijinduan-023-data.js"
+    },
+    {
+      "id": "024",
+      "title": "第二十四回 地宮",
+      "reader": "books/shijinduan/shijinduan-024-reader.html",
+      "data": "books/shijinduan/data/shijinduan-024-data.js"
+    },
+    {
+      "id": "025",
+      "title": "第二十五回 訓斥",
+      "reader": "books/shijinduan/shijinduan-025-reader.html",
+      "data": "books/shijinduan/data/shijinduan-025-data.js"
+    },
+    {
+      "id": "026",
+      "title": "第二十六回 柔腸",
+      "reader": "books/shijinduan/shijinduan-026-reader.html",
+      "data": "books/shijinduan/data/shijinduan-026-data.js"
+    },
+    {
+      "id": "027",
+      "title": "第二十七回 內苑",
+      "reader": "books/shijinduan/shijinduan-027-reader.html",
+      "data": "books/shijinduan/data/shijinduan-027-data.js"
+    },
+    {
+      "id": "028",
+      "title": "第二十八回 廷議",
+      "reader": "books/shijinduan/shijinduan-028-reader.html",
+      "data": "books/shijinduan/data/shijinduan-028-data.js"
+    },
+    {
+      "id": "029",
+      "title": "第二十九回 危機",
+      "reader": "books/shijinduan/shijinduan-029-reader.html",
+      "data": "books/shijinduan/data/shijinduan-029-data.js"
+    },
+    {
+      "id": "030",
+      "title": "第三十回 脫逃",
+      "reader": "books/shijinduan/shijinduan-030-reader.html",
+      "data": "books/shijinduan/data/shijinduan-030-data.js"
+    },
+    {
+      "id": "031",
+      "title": "第三十一回 冰窟",
+      "reader": "books/shijinduan/shijinduan-031-reader.html",
+      "data": "books/shijinduan/data/shijinduan-031-data.js"
+    },
+    {
+      "id": "032",
+      "title": "第三十二回 交易",
+      "reader": "books/shijinduan/shijinduan-032-reader.html",
+      "data": "books/shijinduan/data/shijinduan-032-data.js"
+    },
+    {
+      "id": "033",
+      "title": "第三十三回 雲霄",
+      "reader": "books/shijinduan/shijinduan-033-reader.html",
+      "data": "books/shijinduan/data/shijinduan-033-data.js"
+    },
+    {
+      "id": "034",
+      "title": "第三十四回 交頸",
+      "reader": "books/shijinduan/shijinduan-034-reader.html",
+      "data": "books/shijinduan/data/shijinduan-034-data.js"
+    },
+    {
+      "id": "035",
+      "title": "第三十五回 奪香",
+      "reader": "books/shijinduan/shijinduan-035-reader.html",
+      "data": "books/shijinduan/data/shijinduan-035-data.js"
+    },
+    {
+      "id": "036",
+      "title": "第三十六回 操琴",
+      "reader": "books/shijinduan/shijinduan-036-reader.html",
+      "data": "books/shijinduan/data/shijinduan-036-data.js"
+    },
+    {
+      "id": "037",
+      "title": "第三十七回 寶箱",
+      "reader": "books/shijinduan/shijinduan-037-reader.html",
+      "data": "books/shijinduan/data/shijinduan-037-data.js"
+    },
+    {
+      "id": "038",
+      "title": "第三十八回 樂理",
+      "reader": "books/shijinduan/shijinduan-038-reader.html",
+      "data": "books/shijinduan/data/shijinduan-038-data.js"
+    },
+    {
+      "id": "039",
+      "title": "第三十九回 綺夢",
+      "reader": "books/shijinduan/shijinduan-039-reader.html",
+      "data": "books/shijinduan/data/shijinduan-039-data.js"
+    },
+    {
+      "id": "040",
+      "title": "第四十回 劇變",
+      "reader": "books/shijinduan/shijinduan-040-reader.html",
+      "data": "books/shijinduan/data/shijinduan-040-data.js"
+    },
+    {
+      "id": "041",
+      "title": "第四十一回 消滅",
+      "reader": "books/shijinduan/shijinduan-041-reader.html",
+      "data": "books/shijinduan/data/shijinduan-041-data.js"
+    },
+    {
+      "id": "042",
+      "title": "第四十二回 風雨",
+      "reader": "books/shijinduan/shijinduan-042-reader.html",
+      "data": "books/shijinduan/data/shijinduan-042-data.js"
+    },
+    {
+      "id": "043",
+      "title": "第四十三回 心結",
+      "reader": "books/shijinduan/shijinduan-043-reader.html",
+      "data": "books/shijinduan/data/shijinduan-043-data.js"
+    },
+    {
+      "id": "044",
+      "title": "第四十四回 一夕",
+      "reader": "books/shijinduan/shijinduan-044-reader.html",
+      "data": "books/shijinduan/data/shijinduan-044-data.js"
+    },
+    {
+      "id": "045",
+      "title": "第四十五回 風骨",
+      "reader": "books/shijinduan/shijinduan-045-reader.html",
+      "data": "books/shijinduan/data/shijinduan-045-data.js"
+    },
+    {
+      "id": "046",
+      "title": "第四十六回 沉鬱",
+      "reader": "books/shijinduan/shijinduan-046-reader.html",
+      "data": "books/shijinduan/data/shijinduan-046-data.js"
+    },
+    {
+      "id": "047",
+      "title": "第四十七回 偽裝",
+      "reader": "books/shijinduan/shijinduan-047-reader.html",
+      "data": "books/shijinduan/data/shijinduan-047-data.js"
+    },
+    {
+      "id": "048",
+      "title": "第四十八回 竊國",
+      "reader": "books/shijinduan/shijinduan-048-reader.html",
+      "data": "books/shijinduan/data/shijinduan-048-data.js"
+    },
+    {
+      "id": "049",
+      "title": "第四十九回 黃粱",
+      "reader": "books/shijinduan/shijinduan-049-reader.html",
+      "data": "books/shijinduan/data/shijinduan-049-data.js"
+    },
+    {
+      "id": "050",
+      "title": "第五十回 失憶",
+      "reader": "books/shijinduan/shijinduan-050-reader.html",
+      "data": "books/shijinduan/data/shijinduan-050-data.js"
+    },
+    {
+      "id": "051",
+      "title": "第五十一回 昭然",
+      "reader": "books/shijinduan/shijinduan-051-reader.html",
+      "data": "books/shijinduan/data/shijinduan-051-data.js"
+    },
+    {
+      "id": "052",
+      "title": "第五十二回 雙子",
+      "reader": "books/shijinduan/shijinduan-052-reader.html",
+      "data": "books/shijinduan/data/shijinduan-052-data.js"
+    },
+    {
+      "id": "053",
+      "title": "第五十三回 逆轉",
+      "reader": "books/shijinduan/shijinduan-053-reader.html",
+      "data": "books/shijinduan/data/shijinduan-053-data.js"
+    },
+    {
+      "id": "054",
+      "title": "第五十四回 隱秘",
+      "reader": "books/shijinduan/shijinduan-054-reader.html",
+      "data": "books/shijinduan/data/shijinduan-054-data.js"
+    },
+    {
+      "id": "055",
+      "title": "第五十五回 曲終",
+      "reader": "books/shijinduan/shijinduan-055-reader.html",
+      "data": "books/shijinduan/data/shijinduan-055-data.js"
+    }
+  ]
+}

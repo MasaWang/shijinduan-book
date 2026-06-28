@@ -168,11 +168,63 @@ function chapterDisplayMeta(title) {
   };
 }
 
+function readerHref(fromReader, toReader) {
+  const fromDir = path.dirname(fromReader);
+  const rel = path.relative(fromDir || '.', toReader).replace(/\\/g, '/');
+  return rel.startsWith('.') ? rel : `./${rel}`;
+}
+
+function bookReaderPath(slug, id) {
+  return `books/${slug}/${slug}-${id}-reader.html`;
+}
+
+function bookDataPath(slug, id) {
+  return `books/${slug}/data/${slug}-${id}-data.js`;
+}
+
+function writeBookMetadata(book) {
+  const metadata = {
+    title: book.title,
+    slug: book.slug,
+    source: book.source,
+    entry: book.chapters[0]?.reader || null,
+    chapters: book.chapters.map((chapter) => ({
+      id: chapter.id,
+      title: chapter.title,
+      reader: chapter.reader,
+      data: chapter.data,
+    })),
+  };
+  const file = path.join(ROOT, 'books', book.slug, 'data', 'metadata.json');
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  writeJson(file, metadata);
+}
+
+function writeBookIndex(book) {
+  const entry = path.basename(book.chapters[0]?.reader || 'index.html');
+  const html = `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=./${entry}">
+  <title>${escapeHtml(book.title)}</title>
+</head>
+<body>
+  <p><a href="./${entry}">進入《${escapeHtml(book.title)}》</a></p>
+</body>
+</html>
+`;
+  fs.mkdirSync(path.join(ROOT, 'books', book.slug, 'assets'), { recursive: true });
+  fs.writeFileSync(path.join(ROOT, 'books', book.slug, 'index.html'), html);
+}
+
 function renderSidebar(manifest, currentBookSlug, currentReader) {
   const bookLinks = manifest.books.map((book) => {
     const firstReader = book.chapters[0] ? book.chapters[0].reader : '#';
     const current = book.slug === currentBookSlug ? ' aria-current="page"' : '';
-    return `      <a class="book-link" href="./${escapeHtml(firstReader)}"${current}>${escapeHtml(book.title)}</a>`;
+    const href = firstReader === '#' ? '#' : readerHref(currentReader, firstReader);
+    return `      <a class="book-link" href="${escapeHtml(href)}"${current}>${escapeHtml(book.title)}</a>`;
   }).join('\n');
 
   const currentBook = manifest.books.find((book) => book.slug === currentBookSlug);
@@ -186,7 +238,8 @@ function renderSidebar(manifest, currentBookSlug, currentReader) {
     const label = parts.name
       ? `<span class="chapter-index">${escapeHtml(parts.number)}</span><span class="chapter-title-pair">${titleHtml}</span>`
       : `<span class="chapter-index chapter-index-wide">${escapeHtml(parts.number)}</span>`;
-    return `      <a class="chapter-link" href="./${escapeHtml(chapter.reader)}"${current}>${label}</a>`;
+    const href = readerHref(currentReader, chapter.reader);
+    return `      <a class="chapter-link" href="${escapeHtml(href)}"${current}>${label}</a>`;
   }).join('\n');
 
   return `  <aside class="library-sidebar" aria-label="書庫與章回選擇">
@@ -203,11 +256,11 @@ ${chapterLinks}
   </aside>`;
 }
 
-function renderImportLauncherScript() {
+function renderImportLauncherScript(importBookHref = './import-book.html') {
   return `  <script>
     async function openBookImport() {
       if (!window.showDirectoryPicker) {
-        window.location.href = './import-book.html';
+        window.location.href = '${importBookHref}';
         return;
       }
 
@@ -232,11 +285,11 @@ function renderImportLauncherScript() {
           folderName: directoryHandle.name,
           files: markdownFiles,
         }));
-        window.location.href = './import-book.html';
+        window.location.href = '${importBookHref}';
       } catch (error) {
         if (error && error.name === 'AbortError') return;
         window.sessionStorage.setItem('pendingBookImportError', error && error.message ? error.message : String(error));
-        window.location.href = './import-book.html';
+        window.location.href = '${importBookHref}';
       }
     }
 
@@ -257,6 +310,8 @@ function renderData({ variable, bookTitle, chapterTitle, source, paragraphs }) {
 function renderReader({ manifest, book, chapter, chapterIndex, dataFile, dataVariable }) {
   const titleParts = chapterDisplayMeta(chapter.title);
   const sidebar = renderSidebar(manifest, book.slug, chapter.reader);
+  const dataHref = readerHref(chapter.reader, dataFile);
+  const importBookHref = readerHref(chapter.reader, 'import-book.html');
   return `<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -786,7 +841,7 @@ ${sidebar}
   <div id="status" class="status">正在建立測量沙盒。</div>
   <div id="measureRoot" class="measure-root" aria-hidden="true"></div>
 
-  <script src="./${escapeHtml(dataFile)}"></script>
+  <script src="${escapeHtml(dataHref)}"></script>
   <script>
     const chapter = window.${dataVariable};
     const state = {
@@ -1086,7 +1141,7 @@ ${sidebar}
 
     init();
   </script>
-${renderImportLauncherScript()}
+${renderImportLauncherScript(importBookHref)}
 </body>
 </html>
 `;
@@ -1100,7 +1155,8 @@ function replaceSidebar(html, sidebar) {
   return html.replace(pattern, sidebar);
 }
 
-function ensureImportShell(html) {
+function ensureImportShell(html, currentReader = 'import-book.html') {
+  const importBookHref = readerHref(currentReader, 'import-book.html');
   let nextHtml = html;
   if (!nextHtml.includes('max-block-size: 520px')) {
     nextHtml = nextHtml.replace(
@@ -1176,7 +1232,9 @@ function ensureImportShell(html) {
   }
 
   if (!nextHtml.includes('function openBookImport()')) {
-    nextHtml = nextHtml.replace('\n</body>', `\n${renderImportLauncherScript()}\n</body>`);
+    nextHtml = nextHtml.replace('\n</body>', `\n${renderImportLauncherScript(importBookHref)}\n</body>`);
+  } else if (nextHtml.includes("window.location.href = './import-book.html'") && importBookHref !== './import-book.html') {
+    nextHtml = nextHtml.replaceAll("window.location.href = './import-book.html'", `window.location.href = '${importBookHref}'`);
   }
 
   return nextHtml;
@@ -1185,11 +1243,15 @@ function ensureImportShell(html) {
 function syncExistingSidebars(manifest, dryRun = false) {
   const synced = [];
   for (const book of manifest.books) {
+    if (!dryRun) {
+      writeBookMetadata(book);
+      writeBookIndex(book);
+    }
     for (const chapter of book.chapters) {
       const readerPath = path.join(ROOT, chapter.reader);
       if (!fs.existsSync(readerPath)) continue;
       const html = fs.readFileSync(readerPath, 'utf8');
-      const nextHtml = ensureImportShell(replaceSidebar(html, renderSidebar(manifest, book.slug, chapter.reader)));
+      const nextHtml = ensureImportShell(replaceSidebar(html, renderSidebar(manifest, book.slug, chapter.reader)), chapter.reader);
       if (nextHtml !== html) {
         synced.push(chapter.reader);
         if (!dryRun) fs.writeFileSync(readerPath, nextHtml);
@@ -1238,8 +1300,8 @@ function main() {
       return {
         id,
         title: chapter.title,
-        reader: `${args.slug}-${id}-reader.html`,
-        data: `${args.slug}-${id}-data.js`,
+        reader: bookReaderPath(args.slug, id),
+        data: bookDataPath(args.slug, id),
       };
     }),
   };
@@ -1273,11 +1335,15 @@ function main() {
   }
 
   writeJson(MANIFEST_PATH, manifest);
+  writeBookMetadata(book);
+  writeBookIndex(book);
 
   selected.forEach((chapter, index) => {
     const meta = book.chapters[index];
     const chapterNumber = Number.isInteger(chapter.order) ? chapter.order : start + index;
     const dataVariable = toJsIdentifier(book.slug, chapterNumber);
+    fs.mkdirSync(path.join(ROOT, 'books', args.slug, 'data'), { recursive: true });
+    fs.mkdirSync(path.join(ROOT, 'books', args.slug, 'assets'), { recursive: true });
     fs.writeFileSync(path.join(ROOT, meta.data), renderData({
       variable: dataVariable,
       bookTitle: book.title,

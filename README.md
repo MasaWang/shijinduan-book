@@ -2,6 +2,32 @@
 
 本專案以 `DESIGN.md` 為唯一正式設計系統。所有根目錄正式 HTML、預覽頁、樣張頁與自動生成的書頁，都必須遵守 `DESIGN.md`；截圖、舊 HTML、臨時重建頁不得作為新的設計權威。
 
+## 目錄結構
+
+```text
+shijinduan-book/
+├── .github/workflows/     # GitHub Pages 部署
+├── tools/                   # 導入、驗證、整理工具
+├── index.html               # 書架入口
+├── DESIGN.md
+├── books.json               # 全庫清單（工具用）
+└── books/
+    ├── shijinduan/          # 十景緞
+    │   ├── index.html
+    │   ├── data/
+    │   │   ├── metadata.json
+    │   │   └── shijinduan-*-data.js
+    │   ├── assets/
+    │   └── shijinduan-*-reader.html
+    └── jinpingmei/          # 金瓶梅詞話
+        ├── index.html
+        ├── data/
+        │   ├── metadata.json
+        │   └── jinpingmei-*-data.js
+        ├── assets/
+        └── jinpingmei-*-reader.html
+```
+
 ## 目前文件
 
 | 文件 | 用途 |
@@ -119,7 +145,8 @@ node tools/verify-readers.js --browser
 推送到 `main` 後，GitHub Actions 會自動部署靜態閱讀站。
 
 - 首頁：`index.html`（書目入口）
-- 金瓶梅：`jinpingmei-000-reader.html`
+- 金瓶梅：`books/jinpingmei/`
+- 十景緞：`books/shijinduan/`
 - 十景緞：`shijinduan-000-reader.html`
 
 首次使用請在 GitHub repo 的 **Settings → Pages → Build and deployment** 中，將 Source 設為 **GitHub Actions**。

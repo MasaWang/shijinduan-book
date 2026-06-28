@@ -41,7 +41,9 @@ function staticVerify(manifest) {
 
       const scripts = extractScripts(html);
       const srcScripts = scripts.filter((script) => script.src);
-      assert(srcScripts.some((script) => script.src === `./${chapter.data}`), `${chapter.reader} 沒有掛載 ${chapter.data}`);
+      const expectedDataSrc = path.relative(path.dirname(chapter.reader), chapter.data).replace(/\\/g, '/');
+      const dataHref = expectedDataSrc.startsWith('.') ? expectedDataSrc : `./${expectedDataSrc}`;
+      assert(srcScripts.some((script) => script.src === dataHref), `${chapter.reader} 沒有掛載 ${dataHref}`);
       scripts.filter((script) => !script.src && script.body.trim()).forEach((script, index) => {
         new vm.Script(script.body, { filename: `${chapter.reader}#inline-${index}` });
       });

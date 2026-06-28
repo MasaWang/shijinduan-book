@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 PORT="${PORT:-8080}"
-PAGE="${1:-jinpingmei-000-reader.html}"
+PAGE="${1:-books/jinpingmei/index.html}"
 PID_FILE="$ROOT/.reader-server.pid"
 
 usage() {
@@ -14,7 +14,8 @@ usage() {
 
 范例:
   ./start-reader.sh                          # 金瓶梅 前言
-  ./start-reader.sh jinpingmei-001-reader.html
+  ./start-reader.sh books/jinpingmei/jinpingmei-001-reader.html
+  ./start-reader.sh books/shijinduan/index.html
   ./start-reader.sh shijinduan-000-reader.html
 
 环境变量:

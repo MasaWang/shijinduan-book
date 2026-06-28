@@ -1,0 +1,614 @@
+{
+  "title": "金瓶梅詞話",
+  "slug": "jinpingmei",
+  "source": "../../Downloads/05_電子書_Ebooks/《金瓶梅詞話》（夢梅館校本）/《金瓶梅詞話》（夢梅館校本）.md",
+  "entry": "books/jinpingmei/jinpingmei-000-reader.html",
+  "chapters": [
+    {
+      "id": "000",
+      "title": "前言與序跋",
+      "reader": "books/jinpingmei/jinpingmei-000-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-000-data.js"
+    },
+    {
+      "id": "001",
+      "title": "第一回 景陽岡武松打虎　潘金蓮嫌夫賣風月",
+      "reader": "books/jinpingmei/jinpingmei-001-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-001-data.js"
+    },
+    {
+      "id": "002",
+      "title": "第二回 西門慶簾下遇金蓮　王婆子貪賄說風情",
+      "reader": "books/jinpingmei/jinpingmei-002-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-002-data.js"
+    },
+    {
+      "id": "003",
+      "title": "第三回 王婆定十件挨光計　西門慶茶房戲金蓮",
+      "reader": "books/jinpingmei/jinpingmei-003-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-003-data.js"
+    },
+    {
+      "id": "004",
+      "title": "第四回 淫婦背武大偷奸　鄆哥不憤鬧茶肆",
+      "reader": "books/jinpingmei/jinpingmei-004-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-004-data.js"
+    },
+    {
+      "id": "005",
+      "title": "第五回 鄆哥幫捉罵王婆　淫婦藥酖武大郎",
+      "reader": "books/jinpingmei/jinpingmei-005-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-005-data.js"
+    },
+    {
+      "id": "006",
+      "title": "第六回 西門慶買囑何九　王婆打酒遇大雨",
+      "reader": "books/jinpingmei/jinpingmei-006-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-006-data.js"
+    },
+    {
+      "id": "007",
+      "title": "第七回 薛婆兒說娶孟玉樓　楊姑娘氣罵張四舅",
+      "reader": "books/jinpingmei/jinpingmei-007-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-007-data.js"
+    },
+    {
+      "id": "008",
+      "title": "第八回 潘金蓮永夜盼西門慶　燒夫靈和尚聽淫聲",
+      "reader": "books/jinpingmei/jinpingmei-008-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-008-data.js"
+    },
+    {
+      "id": "009",
+      "title": "第九回 西門慶計娶潘金蓮　武都頭誤打李外傳",
+      "reader": "books/jinpingmei/jinpingmei-009-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-009-data.js"
+    },
+    {
+      "id": "010",
+      "title": "第十回 武二充配孟州道　妻妾宴賞芙蓉亭",
+      "reader": "books/jinpingmei/jinpingmei-010-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-010-data.js"
+    },
+    {
+      "id": "011",
+      "title": "第十一回 潘金蓮激打孫雪娥　西門慶梳籠李桂姐",
+      "reader": "books/jinpingmei/jinpingmei-011-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-011-data.js"
+    },
+    {
+      "id": "012",
+      "title": "第十二回 潘金蓮私僕受辱　劉理星魘勝貪財",
+      "reader": "books/jinpingmei/jinpingmei-012-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-012-data.js"
+    },
+    {
+      "id": "013",
+      "title": "第十三回 李瓶兒隔牆密約　迎春女窺隙偷光",
+      "reader": "books/jinpingmei/jinpingmei-013-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-013-data.js"
+    },
+    {
+      "id": "014",
+      "title": "第十四回 花子虛因氣喪身　李瓶兒送奸赴會",
+      "reader": "books/jinpingmei/jinpingmei-014-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-014-data.js"
+    },
+    {
+      "id": "015",
+      "title": "第十五回 佳人笑賞玩燈樓　狎客幫嫖麗春院",
+      "reader": "books/jinpingmei/jinpingmei-015-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-015-data.js"
+    },
+    {
+      "id": "016",
+      "title": "第十六回 西門慶謀財娶婦　應伯爵慶喜追歡",
+      "reader": "books/jinpingmei/jinpingmei-016-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-016-data.js"
+    },
+    {
+      "id": "017",
+      "title": "第十七回 宇給事劾倒楊提督　李瓶兒招贅蔣竹山",
+      "reader": "books/jinpingmei/jinpingmei-017-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-017-data.js"
+    },
+    {
+      "id": "018",
+      "title": "第十八回 來保上東京幹事　陳經濟花園管工",
+      "reader": "books/jinpingmei/jinpingmei-018-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-018-data.js"
+    },
+    {
+      "id": "019",
+      "title": "第十九回 草裡蛇邏打蔣竹山　李瓶兒情感西門慶",
+      "reader": "books/jinpingmei/jinpingmei-019-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-019-data.js"
+    },
+    {
+      "id": "020",
+      "title": "第二十回 孟玉樓義勸吳月娘　西門慶大鬧麗春院",
+      "reader": "books/jinpingmei/jinpingmei-020-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-020-data.js"
+    },
+    {
+      "id": "021",
+      "title": "第二十一回 吳月娘掃雪烹茶　應伯爵替花勾使",
+      "reader": "books/jinpingmei/jinpingmei-021-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-021-data.js"
+    },
+    {
+      "id": "022",
+      "title": "第二十二回 西門慶私淫來旺婦　春梅正色罵李銘",
+      "reader": "books/jinpingmei/jinpingmei-022-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-022-data.js"
+    },
+    {
+      "id": "023",
+      "title": "第二十三回 玉簫觀風賽月房　金蓮竊聽藏春塢",
+      "reader": "books/jinpingmei/jinpingmei-023-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-023-data.js"
+    },
+    {
+      "id": "024",
+      "title": "第二十四回 陳經濟元夜戲嬌姿　惠祥怒詈來旺婦",
+      "reader": "books/jinpingmei/jinpingmei-024-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-024-data.js"
+    },
+    {
+      "id": "025",
+      "title": "第二十五回 雪娥透露蝶蜂情　來旺醉謗西門慶",
+      "reader": "books/jinpingmei/jinpingmei-025-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-025-data.js"
+    },
+    {
+      "id": "026",
+      "title": "第二十六回 來旺兒遞解徐州　宋惠連含羞自縊",
+      "reader": "books/jinpingmei/jinpingmei-026-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-026-data.js"
+    },
+    {
+      "id": "027",
+      "title": "第二十七回 李瓶兒私語翡翠軒　潘金蓮醉鬧葡萄架",
+      "reader": "books/jinpingmei/jinpingmei-027-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-027-data.js"
+    },
+    {
+      "id": "028",
+      "title": "第二十八回 陳經濟因鞋戲金蓮　西門慶怒打鐵棍兒",
+      "reader": "books/jinpingmei/jinpingmei-028-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-028-data.js"
+    },
+    {
+      "id": "029",
+      "title": "第二十九回 吳神僊貴賤相人　潘金蓮蘭湯午戰",
+      "reader": "books/jinpingmei/jinpingmei-029-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-029-data.js"
+    },
+    {
+      "id": "030",
+      "title": "第三十回 來保押送生辰擔　西門慶生子喜加官",
+      "reader": "books/jinpingmei/jinpingmei-030-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-030-data.js"
+    },
+    {
+      "id": "031",
+      "title": "第三十一回 琴童藏壺覷玉簫　西門慶開宴吃喜酒",
+      "reader": "books/jinpingmei/jinpingmei-031-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-031-data.js"
+    },
+    {
+      "id": "032",
+      "title": "第三十二回 李桂姐拜娘認女　應伯爵打渾趨時",
+      "reader": "books/jinpingmei/jinpingmei-032-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-032-data.js"
+    },
+    {
+      "id": "033",
+      "title": "第三十三回 陳經濟失鑰罰唱　韓道國縱婦爭鋒",
+      "reader": "books/jinpingmei/jinpingmei-033-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-033-data.js"
+    },
+    {
+      "id": "034",
+      "title": "第三十四回 書僮兒因寵攬事　平安兒含恨戳舌",
+      "reader": "books/jinpingmei/jinpingmei-034-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-034-data.js"
+    },
+    {
+      "id": "035",
+      "title": "第三十五回 西門慶挾恨責平安　書僮兒妝旦勸狎客",
+      "reader": "books/jinpingmei/jinpingmei-035-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-035-data.js"
+    },
+    {
+      "id": "036",
+      "title": "第三十六回 翟謙寄書尋女子　西門慶結交蔡狀元",
+      "reader": "books/jinpingmei/jinpingmei-036-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-036-data.js"
+    },
+    {
+      "id": "037",
+      "title": "第三十七回 馮媽媽說嫁韓氏女　西門慶包占王六兒",
+      "reader": "books/jinpingmei/jinpingmei-037-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-037-data.js"
+    },
+    {
+      "id": "038",
+      "title": "第三十八回 西門慶夾打二搗鬼　潘金蓮雪夜弄琵琶",
+      "reader": "books/jinpingmei/jinpingmei-038-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-038-data.js"
+    },
+    {
+      "id": "039",
+      "title": "第三十九回 西門慶玉皇廟打醮　吳月娘聽尼僧說經",
+      "reader": "books/jinpingmei/jinpingmei-039-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-039-data.js"
+    },
+    {
+      "id": "040",
+      "title": "第四十回 抱孩童瓶兒希寵　妝丫鬟金蓮市愛",
+      "reader": "books/jinpingmei/jinpingmei-040-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-040-data.js"
+    },
+    {
+      "id": "041",
+      "title": "第四十一回 西門慶與喬大戶結親　潘金蓮共李瓶兒鬭氣",
+      "reader": "books/jinpingmei/jinpingmei-041-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-041-data.js"
+    },
+    {
+      "id": "042",
+      "title": "第四十二回 豪家攔門玩煙火　貴客高樓醉賞燈",
+      "reader": "books/jinpingmei/jinpingmei-042-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-042-data.js"
+    },
+    {
+      "id": "043",
+      "title": "第四十三回 為失金西門慶罵金蓮　因結親月娘會喬太太",
+      "reader": "books/jinpingmei/jinpingmei-043-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-043-data.js"
+    },
+    {
+      "id": "044",
+      "title": "第四十四回 吳月娘留宿李桂姐　西門慶醉拶夏花兒",
+      "reader": "books/jinpingmei/jinpingmei-044-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-044-data.js"
+    },
+    {
+      "id": "045",
+      "title": "第四十五回 桂姐央留夏花兒　月娘含怒罵玳安",
+      "reader": "books/jinpingmei/jinpingmei-045-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-045-data.js"
+    },
+    {
+      "id": "046",
+      "title": "第四十六回 元夜遊行遇雪雨　妻妾笑卜龜兒卦",
+      "reader": "books/jinpingmei/jinpingmei-046-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-046-data.js"
+    },
+    {
+      "id": "047",
+      "title": "第四十七回 王六兒說事圖財　西門慶受贓枉法",
+      "reader": "books/jinpingmei/jinpingmei-047-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-047-data.js"
+    },
+    {
+      "id": "048",
+      "title": "第四十八回 曾御史參劾提刑官　蔡太師奏行七件事",
+      "reader": "books/jinpingmei/jinpingmei-048-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-048-data.js"
+    },
+    {
+      "id": "049",
+      "title": "第四十九回 西門慶迎請宋巡按　永福寺餞行遇胡僧",
+      "reader": "books/jinpingmei/jinpingmei-049-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-049-data.js"
+    },
+    {
+      "id": "050",
+      "title": "第五十回 琴童潛聽燕鶯歡　玳安嬉遊蝴蝶巷",
+      "reader": "books/jinpingmei/jinpingmei-050-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-050-data.js"
+    },
+    {
+      "id": "051",
+      "title": "第五十一回 月娘聽演金剛科　桂姐躲在西門宅",
+      "reader": "books/jinpingmei/jinpingmei-051-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-051-data.js"
+    },
+    {
+      "id": "052",
+      "title": "第五十二回 應伯爵山洞戲春嬌　潘金蓮花園看蘑菇",
+      "reader": "books/jinpingmei/jinpingmei-052-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-052-data.js"
+    },
+    {
+      "id": "053",
+      "title": "第五十三回 吳月娘承歡求子息　李瓶兒酬願保兒童",
+      "reader": "books/jinpingmei/jinpingmei-053-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-053-data.js"
+    },
+    {
+      "id": "054",
+      "title": "第五十四回 應伯爵郊園會諸友　任醫官豪家看病症",
+      "reader": "books/jinpingmei/jinpingmei-054-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-054-data.js"
+    },
+    {
+      "id": "055",
+      "title": "第五十五回 西門慶東京慶壽旦　苗員外揚州送歌童",
+      "reader": "books/jinpingmei/jinpingmei-055-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-055-data.js"
+    },
+    {
+      "id": "056",
+      "title": "第五十六回 西門慶周濟常時節　應伯爵舉薦水秀才",
+      "reader": "books/jinpingmei/jinpingmei-056-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-056-data.js"
+    },
+    {
+      "id": "057",
+      "title": "第五十七回 道長老募修永福寺　薛姑子勸捨陀羅經",
+      "reader": "books/jinpingmei/jinpingmei-057-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-057-data.js"
+    },
+    {
+      "id": "058",
+      "title": "第五十八回 懷妒忌金蓮打秋菊　乞臘肉磨鏡叟訴冤",
+      "reader": "books/jinpingmei/jinpingmei-058-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-058-data.js"
+    },
+    {
+      "id": "059",
+      "title": "第五十九回 西門慶摔死雪獅子　李瓶兒痛哭官哥兒",
+      "reader": "books/jinpingmei/jinpingmei-059-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-059-data.js"
+    },
+    {
+      "id": "060",
+      "title": "第六十回 李瓶兒因暗氣惹病　西門慶立緞鋪開張",
+      "reader": "books/jinpingmei/jinpingmei-060-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-060-data.js"
+    },
+    {
+      "id": "061",
+      "title": "第六十一回 韓道國筵請西門慶　李瓶兒苦痛宴重陽",
+      "reader": "books/jinpingmei/jinpingmei-061-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-061-data.js"
+    },
+    {
+      "id": "062",
+      "title": "第六十二回 潘道士解禳祭燈壇　西門慶大哭李瓶兒",
+      "reader": "books/jinpingmei/jinpingmei-062-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-062-data.js"
+    },
+    {
+      "id": "063",
+      "title": "第六十三回 親朋祭奠開筵宴　西門慶觀戲感李瓶",
+      "reader": "books/jinpingmei/jinpingmei-063-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-063-data.js"
+    },
+    {
+      "id": "064",
+      "title": "第六十四回 玉簫跪央潘金蓮　合衛官祭富室娘",
+      "reader": "books/jinpingmei/jinpingmei-064-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-064-data.js"
+    },
+    {
+      "id": "065",
+      "title": "第六十五回 吳道官迎殯頒真容　宋御史結豪請六黃",
+      "reader": "books/jinpingmei/jinpingmei-065-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-065-data.js"
+    },
+    {
+      "id": "066",
+      "title": "第六十六回 翟管家寄書致賻　黃真人煉度薦亡",
+      "reader": "books/jinpingmei/jinpingmei-066-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-066-data.js"
+    },
+    {
+      "id": "067",
+      "title": "第六十七回 西門慶書房賞雪　李瓶兒夢訴幽情",
+      "reader": "books/jinpingmei/jinpingmei-067-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-067-data.js"
+    },
+    {
+      "id": "068",
+      "title": "第六十八回 鄭月兒賣俏透密意　玳安慇勤尋文嫂",
+      "reader": "books/jinpingmei/jinpingmei-068-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-068-data.js"
+    },
+    {
+      "id": "069",
+      "title": "第六十九回 文嫂通情林太太　王三官中詐求奸",
+      "reader": "books/jinpingmei/jinpingmei-069-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-069-data.js"
+    },
+    {
+      "id": "070",
+      "title": "第七十回 西門慶工完陞級　群僚庭參朱太尉",
+      "reader": "books/jinpingmei/jinpingmei-070-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-070-data.js"
+    },
+    {
+      "id": "071",
+      "title": "第七十一回 李瓶兒何千戶家託夢　提刑官引奏朝儀",
+      "reader": "books/jinpingmei/jinpingmei-071-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-071-data.js"
+    },
+    {
+      "id": "072",
+      "title": "第七十二回 王三官拜西門為義父　應伯爵替李銘釋冤",
+      "reader": "books/jinpingmei/jinpingmei-072-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-072-data.js"
+    },
+    {
+      "id": "073",
+      "title": "第七十三回 潘金蓮不憤憶吹簫　鬱大姐夜唱鬧五更",
+      "reader": "books/jinpingmei/jinpingmei-073-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-073-data.js"
+    },
+    {
+      "id": "074",
+      "title": "第七十四回 宋御史索求八僊鼎　吳月娘聽宣黃氏卷",
+      "reader": "books/jinpingmei/jinpingmei-074-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-074-data.js"
+    },
+    {
+      "id": "075",
+      "title": "第七十五回 春梅毀罵申二姐　玉簫愬言潘金蓮",
+      "reader": "books/jinpingmei/jinpingmei-075-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-075-data.js"
+    },
+    {
+      "id": "076",
+      "title": "第七十六回 孟玉樓解慍吳月娘　西門慶斥逐溫葵軒",
+      "reader": "books/jinpingmei/jinpingmei-076-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-076-data.js"
+    },
+    {
+      "id": "077",
+      "title": "第七十七回 西門慶踏雪訪愛月　賁四嫂倚牖盼佳期",
+      "reader": "books/jinpingmei/jinpingmei-077-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-077-data.js"
+    },
+    {
+      "id": "078",
+      "title": "第七十八回 西門慶兩戰林太太　吳月娘玩燈請藍氏",
+      "reader": "books/jinpingmei/jinpingmei-078-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-078-data.js"
+    },
+    {
+      "id": "079",
+      "title": "第七十九回 西門慶貪慾得病　吳月娘墓生產子",
+      "reader": "books/jinpingmei/jinpingmei-079-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-079-data.js"
+    },
+    {
+      "id": "080",
+      "title": "第八十回 陳經濟竊玉偷香　李嬌兒盜財歸院",
+      "reader": "books/jinpingmei/jinpingmei-080-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-080-data.js"
+    },
+    {
+      "id": "081",
+      "title": "第八十一回 韓道國拐財倚勢　湯來保欺主背恩",
+      "reader": "books/jinpingmei/jinpingmei-081-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-081-data.js"
+    },
+    {
+      "id": "082",
+      "title": "第八十二回 潘金蓮月夜偷期　陳經濟畫樓雙羙",
+      "reader": "books/jinpingmei/jinpingmei-082-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-082-data.js"
+    },
+    {
+      "id": "083",
+      "title": "第八十三回 秋菊含恨洩幽情　春梅寄柬諧佳會",
+      "reader": "books/jinpingmei/jinpingmei-083-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-083-data.js"
+    },
+    {
+      "id": "084",
+      "title": "第八十四回 吳月娘大鬧碧霞宮　宋公明義釋清風寨",
+      "reader": "books/jinpingmei/jinpingmei-084-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-084-data.js"
+    },
+    {
+      "id": "085",
+      "title": "第八十五回 月娘識破金蓮姦情　薛嫂月夜賣春梅",
+      "reader": "books/jinpingmei/jinpingmei-085-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-085-data.js"
+    },
+    {
+      "id": "086",
+      "title": "第八十六回 雪娥唆打陳經濟　王婆售利嫁金蓮",
+      "reader": "books/jinpingmei/jinpingmei-086-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-086-data.js"
+    },
+    {
+      "id": "087",
+      "title": "第八十七回 王婆子貪財受報　武都頭殺嫂祭兄",
+      "reader": "books/jinpingmei/jinpingmei-087-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-087-data.js"
+    },
+    {
+      "id": "088",
+      "title": "第八十八回 潘金蓮託夢守禦府　吳月娘佈施募緣僧",
+      "reader": "books/jinpingmei/jinpingmei-088-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-088-data.js"
+    },
+    {
+      "id": "089",
+      "title": "第八十九回 清明節寡婦上新墳　吳月娘誤入永福寺",
+      "reader": "books/jinpingmei/jinpingmei-089-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-089-data.js"
+    },
+    {
+      "id": "090",
+      "title": "第九十回 來旺盜拐孫雪娥　雪娥官賣守備府",
+      "reader": "books/jinpingmei/jinpingmei-090-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-090-data.js"
+    },
+    {
+      "id": "091",
+      "title": "第九十一回 孟玉樓愛嫁李衙內　李衙內怒打玉簪兒",
+      "reader": "books/jinpingmei/jinpingmei-091-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-091-data.js"
+    },
+    {
+      "id": "092",
+      "title": "第九十二回 陳經濟被陷嚴州府　吳月娘大鬧授官廳",
+      "reader": "books/jinpingmei/jinpingmei-092-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-092-data.js"
+    },
+    {
+      "id": "093",
+      "title": "第九十三回 王杏庵仗義賙貧　任道士因財惹禍",
+      "reader": "books/jinpingmei/jinpingmei-093-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-093-data.js"
+    },
+    {
+      "id": "094",
+      "title": "第九十四回 劉二醉毆陳經濟　灑家店雪娥為娼",
+      "reader": "books/jinpingmei/jinpingmei-094-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-094-data.js"
+    },
+    {
+      "id": "095",
+      "title": "第九十五回 平安偷盜假當物　薛嫂喬計說人情",
+      "reader": "books/jinpingmei/jinpingmei-095-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-095-data.js"
+    },
+    {
+      "id": "096",
+      "title": "第九十六回 春梅遊玩舊家池館　守備使張勝尋經濟",
+      "reader": "books/jinpingmei/jinpingmei-096-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-096-data.js"
+    },
+    {
+      "id": "097",
+      "title": "第九十七回 經濟守禦府用事　薛嫂賣花說姻親",
+      "reader": "books/jinpingmei/jinpingmei-097-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-097-data.js"
+    },
+    {
+      "id": "098",
+      "title": "第九十八回 陳經濟臨清開大店　韓愛姐翠館遇情郎",
+      "reader": "books/jinpingmei/jinpingmei-098-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-098-data.js"
+    },
+    {
+      "id": "099",
+      "title": "第九十九回 劉二醉罵王六兒　張勝忿殺陳經濟",
+      "reader": "books/jinpingmei/jinpingmei-099-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-099-data.js"
+    },
+    {
+      "id": "100",
+      "title": "第一百回 韓愛姐湖州尋父　普靜師薦拔群冤",
+      "reader": "books/jinpingmei/jinpingmei-100-reader.html",
+      "data": "books/jinpingmei/data/jinpingmei-100-data.js"
+    }
+  ]
+}

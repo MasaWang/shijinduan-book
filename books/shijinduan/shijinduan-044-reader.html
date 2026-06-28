@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>十景緞 · 第四十四回 一夕</title>
+  <style>
+    :root {
+      --viewport-bg: #F5F1E6;
+      --paper-surface: #FFFDF8;
+      --ink-primary: #000000;
+      --ink-muted: #5F574F;
+      --font-serif: "Huiwen-mincho", "汇文明朝体", "cwTeX 明體", "cwTeXMing", "HanWangMingMedium", "王漢宗中明體繁", "Songti SC", STSong, SimSun, "Noto Serif TC", serif;
+      --page-width: 480px;
+      --page-height: 720px;
+      --page-padding: 24px;
+      --frame-outer: 3px;
+      --frame-gap: 5px;
+      --frame-inner: 1px;
+      --header-height: 64px;
+      --footer-height: 52px;
+      --body-font-size: 17px;
+      --body-line-height: 1.76;
+      --line-advance: 30px;
+      --leaf-columns: 5;
+      --leaf-text-width: 150px;
+      --body-padding-inline: 30px;
+      --body-padding-block: 16px;
+      --spine-width: 20px;
+      --fold-gutter: 16px;
+      --column-gap: 28px;
+      --paragraph-gap: 0.65em;
+    }
+
+    * { box-sizing: border-box; }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: var(--viewport-bg);
+      color: var(--ink-primary);
+      font-family: var(--font-serif);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) auto minmax(120px, 1fr);
+      grid-template-rows: auto auto auto;
+      align-content: center;
+      gap: 10px;
+      padding: 24px;
+    }
+
+    .toolbar {
+      grid-column: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      min-height: 40px;
+    }
+
+    .toolbar button {
+      appearance: none;
+      border: 1px solid #000;
+      border-radius: 0;
+      background: var(--paper-surface);
+      color: #000;
+      font: 15px/1 var(--font-serif);
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .toolbar button:disabled {
+      color: var(--ink-muted);
+      border-color: #8A8278;
+      cursor: default;
+    }
+
+    .counter {
+      min-width: 8em;
+      text-align: center;
+      font-size: 14px;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .library-sidebar {
+      grid-column: 1;
+      grid-row: 2;
+      justify-self: end;
+      align-self: start;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 18px;
+      min-width: 124px;
+      margin-inline-end: 40px;
+    }
+
+    .book-selector,
+    .chapter-selector {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+
+    .chapter-selector {
+      max-block-size: 520px;
+      overflow: auto;
+      padding-inline-end: 2px;
+    }
+
+    .selector-label {
+      color: var(--ink-muted);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .book-link,
+    .add-book-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      border: 1px solid #000;
+      border-radius: 0;
+      background: var(--paper-surface);
+      color: #000;
+      font: 14px/1 var(--font-serif);
+      letter-spacing: 0.04em;
+      padding: 7px 10px;
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .chapter-link {
+      display: grid;
+      grid-template-columns: 4.6em minmax(0, 1fr);
+      align-items: center;
+      gap: 10px;
+      min-height: 32px;
+      border: 1px solid #000;
+      border-radius: 0;
+      background: var(--paper-surface);
+      color: #000;
+      font: 14px/1.15 var(--font-serif);
+      letter-spacing: 0.04em;
+      padding: 7px 10px;
+      text-decoration: none;
+    }
+
+    .chapter-index {
+      text-align: end;
+      white-space: nowrap;
+    }
+
+    .chapter-index-wide {
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+
+    .chapter-title-pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      text-align: center;
+    }
+
+    .chapter-title-pair span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chapter-title-pair .single-phrase {
+      grid-column: 1 / -1;
+    }
+
+    .add-book-button {
+      border-style: dashed;
+      color: var(--ink-muted);
+    }
+
+    .book-link[aria-current="page"],
+    .chapter-link[aria-current="page"] {
+      background: #000;
+      color: var(--paper-surface);
+    }
+
+    .sidebar-divider {
+      border: 0;
+      border-top: 1px solid rgba(0, 0, 0, 0.28);
+      inline-size: 100%;
+      margin: 0;
+    }
+
+    .stage {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .page-card {
+      width: var(--page-width);
+      height: var(--page-height);
+      padding: var(--page-padding);
+      background: var(--paper-surface);
+      box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    .border-wrapper {
+      width: 100%;
+      height: 100%;
+      border: var(--frame-outer) solid var(--ink-primary);
+      padding: var(--frame-gap);
+    }
+
+    .border-inner {
+      width: 100%;
+      height: 100%;
+      border: var(--frame-inner) solid var(--ink-primary);
+      display: grid;
+      grid-template-rows: var(--header-height) 1fr var(--footer-height);
+      background: var(--paper-surface);
+    }
+
+    .margin-top {
+      border-bottom: 1px solid var(--ink-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 400;
+    }
+
+    .header-title {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      transform: translateX(-2px);
+    }
+
+    .header-title span {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      white-space: nowrap;
+      font-size: 18px;
+      line-height: 1;
+      letter-spacing: 0.04em;
+    }
+
+    .grid-body {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+
+    .middle-spine {
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 50%;
+      inline-size: var(--spine-width);
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 5px;
+      padding-block-start: 112px;
+      z-index: 4;
+    }
+
+    .middle-spine::before {
+      content: "";
+      position: absolute;
+      inset-inline-start: 50%;
+      inset-block: 0;
+      inline-size: 1px;
+      background: var(--ink-primary);
+      transform: translateX(-50%);
+      z-index: 0;
+    }
+
+    .spine-text {
+      position: relative;
+      z-index: 1;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      background: var(--paper-surface);
+      color: var(--ink-primary);
+      font-size: 14px;
+      line-height: 1.1;
+      letter-spacing: 0.08em;
+      padding-block: 2px;
+    }
+
+    .yuwei {
+      position: relative;
+      z-index: 1;
+      inline-size: 16px;
+      block-size: auto;
+      display: block;
+      background: var(--paper-surface);
+    }
+
+    .lower-yuwei { transform: rotate(180deg); }
+
+    .leaf-text {
+      position: relative;
+      display: flex;
+      flex-direction: row-reverse;
+      inline-size: calc(var(--leaf-text-width) + var(--body-padding-inline) + var(--fold-gutter));
+      block-size: 100%;
+      overflow: hidden;
+      gap: 0;
+    }
+
+    .right-text {
+      grid-column: 2;
+      justify-self: end;
+      padding: var(--body-padding-block) var(--body-padding-inline) var(--body-padding-block) var(--fold-gutter);
+    }
+
+    .left-text {
+      grid-column: 1;
+      justify-self: start;
+      padding: var(--body-padding-block) var(--fold-gutter) var(--body-padding-block) var(--body-padding-inline);
+    }
+
+    .vcol {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      flex: 0 0 var(--line-advance);
+      block-size: var(--line-advance);
+      inline-size: 100%;
+      overflow: hidden;
+      font-size: var(--body-font-size);
+      font-weight: 400;
+      line-height: var(--body-line-height);
+      letter-spacing: 0.02em;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      line-break: strict;
+      hanging-punctuation: allow-end last;
+      overflow-wrap: normal;
+      word-break: normal;
+      overflow: visible;
+    }
+
+    .vcol p {
+      margin: 0;
+      padding: 0;
+      hanging-punctuation: allow-end last;
+      line-break: strict;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    .hang-end-punctuation {
+      display: inline-block;
+      inline-size: 0;
+      overflow: visible;
+      transform: translateY(-0.25em);
+    }
+
+    .chapter-opening-title {
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.55;
+      letter-spacing: 0.03em;
+    }
+
+    .annotation {
+      display: inline-block;
+      color: #1A1A1A;
+      font-size: 11px;
+      line-height: 1.2;
+      letter-spacing: 0.01em;
+      margin-inline: 2px;
+      padding-block: 4px;
+      border-inline-start: 1px dashed #CCCCCC;
+      border-inline-end: 1px dashed #CCCCCC;
+      vertical-align: middle;
+    }
+
+    .margin-bottom {
+      border-top: 1px solid var(--ink-primary);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding-inline: 28px;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-book,
+    .footer-page {
+      writing-mode: vertical-rl;
+      justify-self: center;
+    }
+
+    .footer-book { grid-column: 2; }
+    .footer-page { grid-column: 1; }
+
+    .status {
+      grid-column: 2;
+      grid-row: 3;
+      min-height: 18px;
+      text-align: center;
+      color: var(--ink-muted);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    .measure-root {
+      position: fixed;
+      left: -200vw;
+      top: 0;
+      visibility: hidden;
+      pointer-events: none;
+      contain: layout style paint;
+    }
+
+    @media (max-width: 560px) {
+      body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto auto;
+        padding: 12px;
+      }
+
+      .toolbar,
+      .stage,
+      .library-sidebar,
+      .status { grid-column: 1; }
+
+      .toolbar { grid-row: 1; }
+      .stage { grid-row: 2; }
+
+      .library-sidebar {
+        grid-row: 3;
+        justify-self: center;
+        align-self: center;
+        margin-inline-end: 0;
+        min-width: 0;
+      }
+
+      .book-selector,
+      .chapter-selector {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .sidebar-divider { display: none; }
+      .status { grid-row: 4; }
+
+      .page-card {
+        transform: scale(0.84);
+        transform-origin: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="toolbar" aria-label="翻頁控制">
+    <button id="prevPage" type="button">上一頁</button>
+    <div id="pageCounter" class="counter">測量中</div>
+    <button id="nextPage" type="button">下一頁</button>
+  </nav>
+
+  <main class="stage">
+    <article class="page-card" aria-label="十景緞 第四十四回 一夕">
+      <div class="border-wrapper">
+        <div class="border-inner">
+          <header id="chapterTitle" class="margin-top" aria-label="第四十四回 一夕">
+            <div class="header-title">
+              <span id="headerChapterNumber">第四十四回</span>
+              <span id="headerChapterTitle">一夕</span>
+            </div>
+          </header>
+
+          <section class="grid-body">
+            <div class="middle-spine" aria-hidden="true">
+              <div id="spineChapterNumber" class="spine-text">第四十四回</div>
+              <svg class="yuwei upper-yuwei" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 28">
+                <path d="M 50,0 L 100,20 L 100,28 L 95,28 L 50,7 L 5,28 L 0,28 L 0,20 Z" fill="black"/>
+              </svg>
+              <div id="spineChapterTitle" class="spine-text">一夕</div>
+              <svg class="yuwei lower-yuwei" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 28">
+                <path d="M 50,0 L 100,20 L 100,28 L 95,28 L 50,7 L 5,28 L 0,28 L 0,20 Z" fill="black"/>
+              </svg>
+            </div>
+            <div id="leftText" class="leaf-text left-text"></div>
+            <div id="rightText" class="leaf-text right-text"></div>
+          </section>
+
+          <footer class="margin-bottom">
+            <span id="pageNumber" class="footer-page">初一</span>
+            <span id="bookTitle" class="footer-book">十景緞</span>
+          </footer>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <aside class="library-sidebar" aria-label="書庫與章回選擇">
+    <nav class="book-selector" aria-label="書目選擇">
+      <span class="selector-label">書目</span>
+      <a class="book-link" href="./shijinduan-000-reader.html" aria-current="page">十景緞</a>
+      <a class="book-link" href="../jinpingmei/jinpingmei-000-reader.html">金瓶梅詞話</a>
+      <button class="add-book-button" type="button" data-import-book>添加新書</button>
+    </nav>
+    <hr class="sidebar-divider">
+    <nav class="chapter-selector" aria-label="章回選擇">
+      <span class="selector-label">章回</span>
+      <a class="chapter-link" href="./shijinduan-000-reader.html"><span class="chapter-index chapter-index-wide">前言與序跋</span></a>
+      <a class="chapter-link" href="./shijinduan-001-reader.html"><span class="chapter-index">第一回</span><span class="chapter-title-pair"><span class="single-phrase">出山</span></span></a>
+      <a class="chapter-link" href="./shijinduan-002-reader.html"><span class="chapter-index">第二回</span><span class="chapter-title-pair"><span class="single-phrase">初遇</span></span></a>
+      <a class="chapter-link" href="./shijinduan-003-reader.html"><span class="chapter-index">第三回</span><span class="chapter-title-pair"><span class="single-phrase">邂逅</span></span></a>
+      <a class="chapter-link" href="./shijinduan-004-reader.html"><span class="chapter-index">第四回</span><span class="chapter-title-pair"><span class="single-phrase">佳人</span></span></a>
+      <a class="chapter-link" href="./shijinduan-005-reader.html"><span class="chapter-index">第五回</span><span class="chapter-title-pair"><span class="single-phrase">思君</span></span></a>
+      <a class="chapter-link" href="./shijinduan-006-reader.html"><span class="chapter-index">第六回</span><span class="chapter-title-pair"><span class="single-phrase">慕容</span></span></a>
+      <a class="chapter-link" href="./shijinduan-007-reader.html"><span class="chapter-index">第七回</span><span class="chapter-title-pair"><span class="single-phrase">並調</span></span></a>
+      <a class="chapter-link" href="./shijinduan-008-reader.html"><span class="chapter-index">第八回</span><span class="chapter-title-pair"><span class="single-phrase">邪曲</span></span></a>
+      <a class="chapter-link" href="./shijinduan-009-reader.html"><span class="chapter-index">第九回</span><span class="chapter-title-pair"><span class="single-phrase">偷窺</span></span></a>
+      <a class="chapter-link" href="./shijinduan-010-reader.html"><span class="chapter-index">第十回</span><span class="chapter-title-pair"><span class="single-phrase">受制</span></span></a>
+      <a class="chapter-link" href="./shijinduan-011-reader.html"><span class="chapter-index">第十一回</span><span class="chapter-title-pair"><span class="single-phrase">寒功</span></span></a>
+      <a class="chapter-link" href="./shijinduan-012-reader.html"><span class="chapter-index">第十二回</span><span class="chapter-title-pair"><span class="single-phrase">夜探</span></span></a>
+      <a class="chapter-link" href="./shijinduan-013-reader.html"><span class="chapter-index">第十三回</span><span class="chapter-title-pair"><span class="single-phrase">再會</span></span></a>
+      <a class="chapter-link" href="./shijinduan-014-reader.html"><span class="chapter-index">第十四回</span><span class="chapter-title-pair"><span class="single-phrase">巾幗</span></span></a>
+      <a class="chapter-link" href="./shijinduan-015-reader.html"><span class="chapter-index">第十五回</span><span class="chapter-title-pair"><span class="single-phrase">迷藥</span></span></a>
+      <a class="chapter-link" href="./shijinduan-016-reader.html"><span class="chapter-index">第十六回</span><span class="chapter-title-pair"><span class="single-phrase">激戰</span></span></a>
+      <a class="chapter-link" href="./shijinduan-017-reader.html"><span class="chapter-index">第十七回</span><span class="chapter-title-pair"><span class="single-phrase">遊鬥</span></span></a>
+      <a class="chapter-link" href="./shijinduan-018-reader.html"><span class="chapter-index">第十八回</span><span class="chapter-title-pair"><span class="single-phrase">爭持</span></span></a>
+      <a class="chapter-link" href="./shijinduan-019-reader.html"><span class="chapter-index">第十九回</span><span class="chapter-title-pair"><span class="single-phrase">斷指</span></span></a>
+      <a class="chapter-link" href="./shijinduan-020-reader.html"><span class="chapter-index">第二十回</span><span class="chapter-title-pair"><span class="single-phrase">師門</span></span></a>
+      <a class="chapter-link" href="./shijinduan-021-reader.html"><span class="chapter-index">第二十一回</span><span class="chapter-title-pair"><span class="single-phrase">大敵</span></span></a>
+      <a class="chapter-link" href="./shijinduan-022-reader.html"><span class="chapter-index">第二十二回</span><span class="chapter-title-pair"><span class="single-phrase">虎威</span></span></a>
+      <a class="chapter-link" href="./shijinduan-023-reader.html"><span class="chapter-index">第二十三回</span><span class="chapter-title-pair"><span class="single-phrase">闖陵</span></span></a>
+      <a class="chapter-link" href="./shijinduan-024-reader.html"><span class="chapter-index">第二十四回</span><span class="chapter-title-pair"><span class="single-phrase">地宮</span></span></a>
+      <a class="chapter-link" href="./shijinduan-025-reader.html"><span class="chapter-index">第二十五回</span><span class="chapter-title-pair"><span class="single-phrase">訓斥</span></span></a>
+      <a class="chapter-link" href="./shijinduan-026-reader.html"><span class="chapter-index">第二十六回</span><span class="chapter-title-pair"><span class="single-phrase">柔腸</span></span></a>
+      <a class="chapter-link" href="./shijinduan-027-reader.html"><span class="chapter-index">第二十七回</span><span class="chapter-title-pair"><span class="single-phrase">內苑</span></span></a>
+      <a class="chapter-link" href="./shijinduan-028-reader.html"><span class="chapter-index">第二十八回</span><span class="chapter-title-pair"><span class="single-phrase">廷議</span></span></a>
+      <a class="chapter-link" href="./shijinduan-029-reader.html"><span class="chapter-index">第二十九回</span><span class="chapter-title-pair"><span class="single-phrase">危機</span></span></a>
+      <a class="chapter-link" href="./shijinduan-030-reader.html"><span class="chapter-index">第三十回</span><span class="chapter-title-pair"><span class="single-phrase">脫逃</span></span></a>
+      <a class="chapter-link" href="./shijinduan-031-reader.html"><span class="chapter-index">第三十一回</span><span class="chapter-title-pair"><span class="single-phrase">冰窟</span></span></a>
+      <a class="chapter-link" href="./shijinduan-032-reader.html"><span class="chapter-index">第三十二回</span><span class="chapter-title-pair"><span class="single-phrase">交易</span></span></a>
+      <a class="chapter-link" href="./shijinduan-033-reader.html"><span class="chapter-index">第三十三回</span><span class="chapter-title-pair"><span class="single-phrase">雲霄</span></span></a>
+      <a class="chapter-link" href="./shijinduan-034-reader.html"><span class="chapter-index">第三十四回</span><span class="chapter-title-pair"><span class="single-phrase">交頸</span></span></a>
+      <a class="chapter-link" href="./shijinduan-035-reader.html"><span class="chapter-index">第三十五回</span><span class="chapter-title-pair"><span class="single-phrase">奪香</span></span></a>
+      <a class="chapter-link" href="./shijinduan-036-reader.html"><span class="chapter-index">第三十六回</span><span class="chapter-title-pair"><span class="single-phrase">操琴</span></span></a>
+      <a class="chapter-link" href="./shijinduan-037-reader.html"><span class="chapter-index">第三十七回</span><span class="chapter-title-pair"><span class="single-phrase">寶箱</span></span></a>
+      <a class="chapter-link" href="./shijinduan-038-reader.html"><span class="chapter-index">第三十八回</span><span class="chapter-title-pair"><span class="single-phrase">樂理</span></span></a>
+      <a class="chapter-link" href="./shijinduan-039-reader.html"><span class="chapter-index">第三十九回</span><span class="chapter-title-pair"><span class="single-phrase">綺夢</span></span></a>
+      <a class="chapter-link" href="./shijinduan-040-reader.html"><span class="chapter-index">第四十回</span><span class="chapter-title-pair"><span class="single-phrase">劇變</span></span></a>
+      <a class="chapter-link" href="./shijinduan-041-reader.html"><span class="chapter-index">第四十一回</span><span class="chapter-title-pair"><span class="single-phrase">消滅</span></span></a>
+      <a class="chapter-link" href="./shijinduan-042-reader.html"><span class="chapter-index">第四十二回</span><span class="chapter-title-pair"><span class="single-phrase">風雨</span></span></a>
+      <a class="chapter-link" href="./shijinduan-043-reader.html"><span class="chapter-index">第四十三回</span><span class="chapter-title-pair"><span class="single-phrase">心結</span></span></a>
+      <a class="chapter-link" href="./shijinduan-044-reader.html" aria-current="page"><span class="chapter-index">第四十四回</span><span class="chapter-title-pair"><span class="single-phrase">一夕</span></span></a>
+      <a class="chapter-link" href="./shijinduan-045-reader.html"><span class="chapter-index">第四十五回</span><span class="chapter-title-pair"><span class="single-phrase">風骨</span></span></a>
+      <a class="chapter-link" href="./shijinduan-046-reader.html"><span class="chapter-index">第四十六回</span><span class="chapter-title-pair"><span class="single-phrase">沉鬱</span></span></a>
+      <a class="chapter-link" href="./shijinduan-047-reader.html"><span class="chapter-index">第四十七回</span><span class="chapter-title-pair"><span class="single-phrase">偽裝</span></span></a>
+      <a class="chapter-link" href="./shijinduan-048-reader.html"><span class="chapter-index">第四十八回</span><span class="chapter-title-pair"><span class="single-phrase">竊國</span></span></a>
+      <a class="chapter-link" href="./shijinduan-049-reader.html"><span class="chapter-index">第四十九回</span><span class="chapter-title-pair"><span class="single-phrase">黃粱</span></span></a>
+      <a class="chapter-link" href="./shijinduan-050-reader.html"><span class="chapter-index">第五十回</span><span class="chapter-title-pair"><span class="single-phrase">失憶</span></span></a>
+      <a class="chapter-link" href="./shijinduan-051-reader.html"><span class="chapter-index">第五十一回</span><span class="chapter-title-pair"><span class="single-phrase">昭然</span></span></a>
+      <a class="chapter-link" href="./shijinduan-052-reader.html"><span class="chapter-index">第五十二回</span><span class="chapter-title-pair"><span class="single-phrase">雙子</span></span></a>
+      <a class="chapter-link" href="./shijinduan-053-reader.html"><span class="chapter-index">第五十三回</span><span class="chapter-title-pair"><span class="single-phrase">逆轉</span></span></a>
+      <a class="chapter-link" href="./shijinduan-054-reader.html"><span class="chapter-index">第五十四回</span><span class="chapter-title-pair"><span class="single-phrase">隱秘</span></span></a>
+      <a class="chapter-link" href="./shijinduan-055-reader.html"><span class="chapter-index">第五十五回</span><span class="chapter-title-pair"><span class="single-phrase">曲終</span></span></a>
+    </nav>
+  </aside>
+
+  <div id="status" class="status">正在建立測量沙盒。</div>
+  <div id="measureRoot" class="measure-root" aria-hidden="true"></div>
+
+  <script src="./data/shijinduan-044-data.js"></script>
+  <script>
+    const chapter = window.BOOK_SHIJINDUAN_CHAPTER_044;
+    const state = {
+      pages: [],
+      index: 0,
+    };
+
+    const els = {
+      prev: document.getElementById('prevPage'),
+      next: document.getElementById('nextPage'),
+      counter: document.getElementById('pageCounter'),
+      leftText: document.getElementById('leftText'),
+      rightText: document.getElementById('rightText'),
+      pageNumber: document.getElementById('pageNumber'),
+      bookTitle: document.getElementById('bookTitle'),
+      chapterTitle: document.getElementById('chapterTitle'),
+      headerChapterNumber: document.getElementById('headerChapterNumber'),
+      headerChapterTitle: document.getElementById('headerChapterTitle'),
+      spineChapterNumber: document.getElementById('spineChapterNumber'),
+      spineChapterTitle: document.getElementById('spineChapterTitle'),
+      status: document.getElementById('status'),
+      measureRoot: document.getElementById('measureRoot'),
+    };
+
+    function escapeHtml(value) {
+      return value
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;');
+    }
+
+    const hangingEndPunctuation = /([，。、；：！？」』）》】〕〗〙〛〉》）］｝,.!?;:]+)$/u;
+    const hangingPunctuationSegment = /^[，。、；：！？」』）》】〕〗〙〛〉》）］｝,.!?;:]+$/u;
+
+    function renderInline(text, shouldHangEnd = false) {
+      const html = escapeHtml(text).replace(/(\[[^\]]+\])/g, '<span class="annotation">$1</span>');
+      if (!shouldHangEnd) return html;
+      return html.replace(hangingEndPunctuation, '<span class="hang-end-punctuation">$1</span>');
+    }
+
+    function renderParagraphs(text) {
+      const paragraphs = text
+        .split(/\n{2,}/)
+        .filter(Boolean);
+
+      return paragraphs
+        .map((paragraph, index) => {
+          const className = paragraph === chapter.chapterTitle ? ' class="chapter-opening-title"' : '';
+          return `<p${className}>${renderInline(paragraph, index === paragraphs.length - 1)}</p>`;
+        })
+        .join('');
+    }
+
+    function chapterDisplayMeta(title) {
+      const match = title.match(/^((?:第.+?[回章卷]|卷.+?))\s*(.*)$/);
+      const number = match ? match[1] : title;
+      const name = match && match[2] ? match[2] : '';
+      const isNumberedChapter = /^第.+?[回章卷]$|^卷.+/u.test(number);
+      if (!isNumberedChapter) {
+        const shortTitle = number.includes('序') || number.includes('跋') ? '序' : number.slice(0, 1);
+        return {
+          number: shortTitle,
+          name,
+          headerName: '',
+          spineName: '',
+          shouldPrependFullTitle: false,
+        };
+      }
+
+      const isLongName = name.length > 8;
+      const shortName = name
+        .split(/[　\s，。、；：！？]/u)
+        .filter(Boolean)[0] || name.slice(0, 4);
+
+      return {
+        number,
+        name,
+        headerName: isLongName ? '' : name,
+        spineName: isLongName ? shortName.slice(0, 3) : name,
+        shouldPrependFullTitle: isLongName,
+      };
+    }
+
+    function pageLabel(pageIndex) {
+      const n = pageIndex + 1;
+      const digits = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+      if (n === 1) return '初一';
+      if (n < 10) return `初${digits[n]}`;
+      if (n < 20) return `十${digits[n - 10]}`;
+      if (n < 100) {
+        const tens = Math.floor(n / 10);
+        const ones = n % 10;
+        return `${digits[tens]}十${digits[ones]}`;
+      }
+      return `百${digits[n - 100] || ''}`;
+    }
+
+    function createColumn() {
+      const column = document.createElement('div');
+      column.className = 'vcol';
+      return column;
+    }
+
+    function createColumns(count) {
+      return Array.from({ length: count }, createColumn);
+    }
+
+    function createMeasureColumn() {
+      const card = document.querySelector('.page-card').cloneNode(true);
+      card.querySelector('#leftText').id = 'measureLeftText';
+      card.querySelector('#rightText').id = 'measureRightText';
+      card.querySelector('#chapterTitle').removeAttribute('id');
+      card.querySelector('#headerChapterNumber').removeAttribute('id');
+      card.querySelector('#headerChapterTitle').removeAttribute('id');
+      card.querySelector('#spineChapterNumber').removeAttribute('id');
+      card.querySelector('#spineChapterTitle').removeAttribute('id');
+      card.querySelector('#pageNumber').removeAttribute('id');
+      card.querySelector('#bookTitle').removeAttribute('id');
+      const measureRight = card.querySelector('#measureRightText');
+      measureRight.replaceChildren(createColumn());
+      els.measureRoot.replaceChildren(card);
+      return measureRight.querySelector('.vcol');
+    }
+
+    function getSegments(text) {
+      if (window.Intl && Intl.Segmenter) {
+        return Array.from(new Intl.Segmenter('zh-Hant', { granularity: 'grapheme' }).segment(text), (item) => item.segment);
+      }
+      return Array.from(text);
+    }
+
+    function absorbHangingPunctuation(segments, end) {
+      let next = end;
+      while (next < segments.length && hangingPunctuationSegment.test(segments[next])) {
+        next += 1;
+      }
+      return next;
+    }
+
+    function fitsColumn(measureColumn, text) {
+      measureColumn.innerHTML = renderParagraphs(text);
+      const inlineOverflow = measureColumn.scrollHeight - measureColumn.clientHeight;
+      const blockOverflow = measureColumn.scrollWidth - measureColumn.clientWidth;
+      return inlineOverflow <= 1 && blockOverflow <= 1;
+    }
+
+    function takeFittingText(measureColumn, segments, start) {
+      if (start >= segments.length) {
+        return { end: start, text: '' };
+      }
+
+      let best = start + 1;
+      let step = 48;
+      let probe = Math.min(start + step, segments.length);
+
+      while (probe < segments.length) {
+        const candidate = segments.slice(start, probe).join('').replace(/^\n+/, '');
+        if (!fitsColumn(measureColumn, candidate)) {
+          break;
+        }
+        best = probe;
+        step *= 2;
+        probe = Math.min(start + step, segments.length);
+      }
+
+      if (probe === segments.length) {
+        const candidate = segments.slice(start, probe).join('').replace(/^\n+/, '');
+        if (fitsColumn(measureColumn, candidate)) {
+          return {
+            end: probe,
+            text: candidate.replace(/\n+$/, ''),
+          };
+        }
+      }
+
+      let low = best + 1;
+      let high = probe;
+
+      while (low <= high) {
+        const mid = Math.floor((low + high) / 2);
+        const candidate = segments.slice(start, mid).join('').replace(/^\n+/, '');
+        if (fitsColumn(measureColumn, candidate)) {
+          best = mid;
+          low = mid + 1;
+        } else {
+          high = mid - 1;
+        }
+      }
+
+      if (best <= start) best = start + 1;
+
+      let leafText = segments.slice(start, best).join('').replace(/^\n+/, '').replace(/\n+$/, '');
+      const lastBreak = leafText.lastIndexOf('\n\n');
+      const remaining = segments.length - best;
+      if (lastBreak > 0 && remaining > 80) {
+        const adjusted = leafText.slice(0, lastBreak).trimEnd();
+        if (adjusted.length > 80 && fitsColumn(measureColumn, adjusted)) {
+          best = start + getSegments(adjusted).length;
+          leafText = adjusted;
+        }
+      }
+
+      const hangingEnd = absorbHangingPunctuation(segments, best);
+      if (hangingEnd > best) {
+        best = hangingEnd;
+        leafText = segments.slice(start, best).join('').replace(/^\n+/, '').replace(/\n+$/, '');
+      }
+
+      return { end: best, text: leafText };
+    }
+
+    function paginate(text) {
+      const measureColumn = createMeasureColumn();
+      const segments = getSegments(text);
+      const pages = [];
+      let start = 0;
+      const leafColumns = Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--leaf-columns'), 10) || 4;
+
+      while (start < segments.length) {
+        const right = [];
+        const left = [];
+        for (let i = 0; i < leafColumns; i += 1) {
+          const result = takeFittingText(measureColumn, segments, start);
+          right.push(result.text);
+          start = result.end > start ? result.end : start + 1;
+        }
+        for (let i = 0; i < leafColumns; i += 1) {
+          const result = takeFittingText(measureColumn, segments, start);
+          left.push(result.text);
+          start = result.end > start ? result.end : start + 1;
+        }
+        pages.push({ right, left });
+      }
+
+      return pages;
+    }
+
+    function renderColumns(container, columns) {
+      const columnNodes = createColumns(Number.parseInt(getComputedStyle(document.documentElement).getPropertyValue('--leaf-columns'), 10) || 4);
+      columnNodes.forEach((column, index) => {
+        column.innerHTML = renderParagraphs(columns[index] || '');
+      });
+      container.replaceChildren(...columnNodes);
+    }
+
+    function renderPage() {
+      const page = state.pages[state.index] || { right: [], left: [] };
+      renderColumns(els.rightText, page.right);
+      renderColumns(els.leftText, page.left);
+      els.pageNumber.textContent = pageLabel(state.index);
+      els.counter.textContent = `${state.index + 1} / ${state.pages.length}`;
+      els.status.textContent = `沙盒測量完成：${chapter.paragraphs.length} 段，${state.pages.length} 頁；右葉 ${els.rightText.children.length} 欄，左葉 ${els.leftText.children.length} 欄。`;
+      els.prev.disabled = state.index === 0;
+      els.next.disabled = state.index >= state.pages.length - 1;
+    }
+
+    function nextPage() {
+      if (state.index < state.pages.length - 1) {
+        state.index += 1;
+        renderPage();
+      }
+    }
+
+    function prevPage() {
+      if (state.index > 0) {
+        state.index -= 1;
+        renderPage();
+      }
+    }
+
+    async function init() {
+      els.prev.disabled = true;
+      els.next.disabled = true;
+      els.chapterTitle.setAttribute('aria-label', chapter.chapterTitle);
+      els.bookTitle.textContent = chapter.footerBook;
+      const displayTitle = chapterDisplayMeta(chapter.chapterTitle);
+      els.headerChapterNumber.textContent = displayTitle.number;
+      els.headerChapterTitle.textContent = displayTitle.headerName;
+      els.spineChapterNumber.textContent = displayTitle.number;
+      els.spineChapterTitle.textContent = displayTitle.spineName;
+      await document.fonts.ready;
+      const fullText = [
+        displayTitle.shouldPrependFullTitle ? chapter.chapterTitle : '',
+        chapter.paragraphs.join('\n\n'),
+      ].filter(Boolean).join('\n\n');
+      state.pages = paginate(fullText);
+      state.index = 0;
+      renderPage();
+    }
+
+    els.prev.addEventListener('click', prevPage);
+    els.next.addEventListener('click', nextPage);
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') nextPage();
+      if (event.key === 'ArrowRight') prevPage();
+    });
+
+    init();
+  </script>
+  <script>
+    async function openBookImport() {
+      if (!window.showDirectoryPicker) {
+        window.location.href = '../../import-book.html';
+        return;
+      }
+
+      try {
+        const directoryHandle = await window.showDirectoryPicker({ mode: 'read' });
+        const markdownFiles = [];
+        for await (const [name, handle] of directoryHandle.entries()) {
+          if (handle.kind !== 'file' || !/\.m(?:d|arkdown)$/i.test(name)) continue;
+          const file = await handle.getFile();
+          const text = await file.text();
+          const chapters = (text.match(/^#{2,6}\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\s*.*$/gmu) || []).length;
+          markdownFiles.push({
+            name,
+            size: file.size,
+            chapters,
+            modified: file.lastModified,
+            text,
+          });
+        }
+
+        window.sessionStorage.setItem('pendingBookImport', JSON.stringify({
+          folderName: directoryHandle.name,
+          files: markdownFiles,
+        }));
+        window.location.href = '../../import-book.html';
+      } catch (error) {
+        if (error && error.name === 'AbortError') return;
+        window.sessionStorage.setItem('pendingBookImportError', error && error.message ? error.message : String(error));
+        window.location.href = '../../import-book.html';
+      }
+    }
+
+    document.querySelector('[data-import-book]')?.addEventListener('click', openBookImport);
+  </script>
+</body>
+</html>
