@@ -18,22 +18,33 @@ const MIME = {
   '.css': 'text/css; charset=utf-8',
 };
 
-function send(response, status, body, type = 'text/plain; charset=utf-8') {
+function corsHeaders(request) {
+  const origin = request.headers.origin || '';
+  const allowedOrigins = new Set([
+    'null',
+    `http://127.0.0.1:${PORT}`,
+    `http://localhost:${PORT}`,
+  ]);
+  return {
+    'Access-Control-Allow-Origin': allowedOrigins.has(origin) ? origin : `http://127.0.0.1:${PORT}`,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
+
+function send(request, response, status, body, type = 'text/plain; charset=utf-8') {
   response.writeHead(status, {
     'Content-Type': type,
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    ...corsHeaders(request),
   });
   response.end(body);
 }
 
-function sendHead(response, status, type = 'text/html; charset=utf-8') {
+function sendHead(request, response, status, type = 'text/html; charset=utf-8') {
   response.writeHead(status, {
     'Content-Type': type,
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
+    ...corsHeaders(request),
   });
   response.end();
 }
@@ -66,7 +77,7 @@ async function handleImport(request, response) {
   try {
     const payload = JSON.parse(await readBody(request));
     if (!payload.title || !payload.slug || !payload.content) {
-      send(response, 400, JSON.stringify({ error: '缺少書名、slug 或 Markdown 內容。' }), 'application/json; charset=utf-8');
+      send(request, response, 400, JSON.stringify({ error: '缺少書名、slug 或 Markdown 內容。' }), 'application/json; charset=utf-8');
       return;
     }
 
@@ -84,6 +95,7 @@ async function handleImport(request, response) {
       '--sync-existing',
     ];
     if (payload.limit) args.push('--limit', String(payload.limit));
+    if (payload.force === true) args.push('--force');
 
     const result = childProcess.spawnSync(process.execPath, args, {
       cwd: ROOT,
@@ -91,18 +103,18 @@ async function handleImport(request, response) {
     });
 
     if (result.status !== 0) {
-      send(response, 500, JSON.stringify({
+      send(request, response, 500, JSON.stringify({
         error: result.stderr || result.stdout || '生成失敗。',
       }), 'application/json; charset=utf-8');
       return;
     }
 
-    send(response, 200, JSON.stringify({
+    send(request, response, 200, JSON.stringify({
       message: '新書已生成，書目側欄已同步。',
       output: result.stdout.trim(),
     }), 'application/json; charset=utf-8');
   } catch (error) {
-    send(response, 500, JSON.stringify({ error: error.message || String(error) }), 'application/json; charset=utf-8');
+    send(request, response, 500, JSON.stringify({ error: error.message || String(error) }), 'application/json; charset=utf-8');
   }
 }
 
@@ -111,20 +123,20 @@ function serveStatic(request, response) {
   const pathname = decodeURIComponent(parsed.pathname === '/' ? '/import-book.html' : parsed.pathname);
   const filePath = path.resolve(ROOT, `.${pathname}`);
   if (!filePath.startsWith(ROOT) || !fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    if (request.method === 'HEAD') sendHead(response, 404);
-    else send(response, 404, 'Not found');
+    if (request.method === 'HEAD') sendHead(request, response, 404);
+    else send(request, response, 404, 'Not found');
     return;
   }
   if (request.method === 'HEAD') {
-    sendHead(response, 200, MIME[path.extname(filePath)] || 'application/octet-stream');
+    sendHead(request, response, 200, MIME[path.extname(filePath)] || 'application/octet-stream');
     return;
   }
-  send(response, 200, fs.readFileSync(filePath), MIME[path.extname(filePath)] || 'application/octet-stream');
+  send(request, response, 200, fs.readFileSync(filePath), MIME[path.extname(filePath)] || 'application/octet-stream');
 }
 
 const server = http.createServer(async (request, response) => {
   if (request.method === 'OPTIONS') {
-    send(response, 204, '');
+    send(request, response, 204, '');
     return;
   }
   if (request.method === 'POST' && request.url === '/api/import-book') {
@@ -135,7 +147,7 @@ const server = http.createServer(async (request, response) => {
     serveStatic(request, response);
     return;
   }
-  send(response, 405, 'Method not allowed');
+  send(request, response, 405, 'Method not allowed');
 });
 
 server.listen(PORT, '127.0.0.1', () => {

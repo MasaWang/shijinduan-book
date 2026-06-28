@@ -119,6 +119,19 @@
       letter-spacing: 0.04em;
     }
 
+    .checkbox-label {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      color: var(--ink-primary);
+      line-height: 1.5;
+    }
+
+    .checkbox-label input {
+      width: auto;
+      margin: 0;
+    }
+
     input,
     select {
       width: 100%;
@@ -223,6 +236,10 @@
           生成章數
           <input id="chapterLimit" type="number" min="1" placeholder="留空表示全部">
         </label>
+        <label class="checkbox-label">
+          <input id="forceOverwrite" type="checkbox">
+          覆蓋既有同 slug 書籍
+        </label>
       </div>
 
       <label>
@@ -256,6 +273,7 @@
       bookSlug: document.getElementById('bookSlug'),
       startChapter: document.getElementById('startChapter'),
       chapterLimit: document.getElementById('chapterLimit'),
+      forceOverwrite: document.getElementById('forceOverwrite'),
       fileSelect: document.getElementById('fileSelect'),
       fileList: document.getElementById('fileList'),
       generateBook: document.getElementById('generateBook'),
@@ -356,6 +374,7 @@
         `--slug "${slug}"`,
         `--start ${start}`,
         limit ? `--limit ${limit}` : '',
+        els.forceOverwrite.checked ? '--force' : '',
         '--sync-existing',
       ].filter(Boolean).join(' ');
     }
@@ -401,6 +420,7 @@
         start: els.startChapter.value || '1',
         limit: els.chapterLimit.value,
         syncExisting: true,
+        force: els.forceOverwrite.checked,
       };
 
       const apiBase = window.location.protocol === 'file:' ? 'http://127.0.0.1:8787' : '';
@@ -458,6 +478,7 @@
     });
     els.startChapter.addEventListener('input', updateCommand);
     els.chapterLimit.addEventListener('input', updateCommand);
+    els.forceOverwrite.addEventListener('change', updateCommand);
     els.generateBook.addEventListener('click', generateBook);
     els.copyCommand.addEventListener('click', copyCommand);
 

@@ -219,6 +219,109 @@ function writeBookIndex(book) {
   fs.writeFileSync(path.join(ROOT, 'books', book.slug, 'index.html'), html);
 }
 
+function writeRootIndex(manifest) {
+  const bookLinks = manifest.books.map((book) => {
+    const href = book.chapters[0] ? `./${book.chapters[0].reader}` : '#';
+    return `          <li><a href="${escapeHtml(href)}">${escapeHtml(book.title)}</a></li>`;
+  }).join('\n');
+  const html = `<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>古籍閱讀器</title>
+  <style>
+    :root {
+      --viewport-bg: #F5F1E6;
+      --paper-surface: #FFFDF8;
+      --ink-primary: #000000;
+      --font-serif: "Huiwen-mincho", "汇文明朝体", "cwTeX 明體", "cwTeXMing", "HanWangMingMedium", "王漢宗中明體繁", "Songti SC", STSong, SimSun, "Noto Serif TC", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: var(--viewport-bg);
+      color: var(--ink-primary);
+      font-family: var(--font-serif);
+      padding: 24px;
+    }
+
+    main {
+      width: min(420px, 100%);
+      background: var(--paper-surface);
+      border: 3px solid #000;
+      padding: 5px;
+    }
+
+    .inner {
+      border: 1px solid #000;
+      padding: 28px;
+    }
+
+    .layout {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      writing-mode: vertical-rl;
+      height: 120px;
+      letter-spacing: 0.08em;
+    }
+
+    p {
+      margin: 0 0 20px;
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li + li { margin-top: 12px; }
+
+    a {
+      color: #000;
+      text-decoration: none;
+      border-bottom: 1px solid #000;
+      font-size: 17px;
+    }
+
+    a:hover { opacity: 0.72; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="inner">
+      <div class="layout">
+        <h1>古籍閱讀器</h1>
+        <div>
+          <p>豎排紙本風格閱讀。選擇書目進入。</p>
+          <ul>
+${bookLinks}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
+`;
+  fs.writeFileSync(path.join(ROOT, 'index.html'), html);
+}
+
 function renderSidebar(manifest, currentBookSlug, currentReader) {
   const bookLinks = manifest.books.map((book) => {
     const firstReader = book.chapters[0] ? book.chapters[0].reader : '#';
@@ -258,6 +361,28 @@ ${chapterLinks}
 
 function renderImportLauncherScript(importBookHref = './import-book.html') {
   return `  <script>
+    async function scanBookImportDirectory(handle, prefix = '') {
+      const files = [];
+      for await (const [name, child] of handle.entries()) {
+        if (child.kind === 'directory') {
+          files.push(...await scanBookImportDirectory(child, \`\${prefix}\${name}/\`));
+          continue;
+        }
+        if (!/\\.m(?:d|arkdown)$/i.test(name)) continue;
+        const file = await child.getFile();
+        const text = await file.text();
+        const chapters = (text.match(/^#{2,6}\\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\\s*.*$/gmu) || []).length;
+        files.push({
+          name: \`\${prefix}\${name}\`,
+          size: file.size,
+          chapters,
+          modified: file.lastModified,
+          text,
+        });
+      }
+      return files;
+    }
+
     async function openBookImport() {
       if (!window.showDirectoryPicker) {
         window.location.href = '${importBookHref}';
@@ -266,20 +391,7 @@ function renderImportLauncherScript(importBookHref = './import-book.html') {
 
       try {
         const directoryHandle = await window.showDirectoryPicker({ mode: 'read' });
-        const markdownFiles = [];
-        for await (const [name, handle] of directoryHandle.entries()) {
-          if (handle.kind !== 'file' || !/\\.m(?:d|arkdown)$/i.test(name)) continue;
-          const file = await handle.getFile();
-          const text = await file.text();
-          const chapters = (text.match(/^#{2,6}\\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\\s*.*$/gmu) || []).length;
-          markdownFiles.push({
-            name,
-            size: file.size,
-            chapters,
-            modified: file.lastModified,
-            text,
-          });
-        }
+        const markdownFiles = await scanBookImportDirectory(directoryHandle);
 
         window.sessionStorage.setItem('pendingBookImport', JSON.stringify({
           folderName: directoryHandle.name,
@@ -412,7 +524,7 @@ function renderReader({ manifest, book, chapter, chapterIndex, dataFile, dataVar
       align-items: stretch;
       gap: 18px;
       min-width: 124px;
-      margin-inline-end: 40px;
+      margin-inline-end: 50px;
     }
 
     .book-selector,
@@ -1155,9 +1267,21 @@ function replaceSidebar(html, sidebar) {
   return html.replace(pattern, sidebar);
 }
 
+function replaceImportLauncherScript(html, importBookHref) {
+  const nextScript = renderImportLauncherScript(importBookHref);
+  const pattern = /\n  <script>\n    async function scanBookImportDirectory[\s\S]*?document\.querySelector\('\[data-import-book\]'\)\?\.addEventListener\('click', openBookImport\);\n  <\/script>/;
+  if (pattern.test(html)) return html.replace(pattern, `\n${nextScript}`);
+
+  const oldPattern = /\n  <script>\n    async function openBookImport\(\)[\s\S]*?document\.querySelector\('\[data-import-book\]'\)\?\.addEventListener\('click', openBookImport\);\n  <\/script>/;
+  if (oldPattern.test(html)) return html.replace(oldPattern, `\n${nextScript}`);
+
+  return html.replace('\n</body>', `\n${nextScript}\n</body>`);
+}
+
 function ensureImportShell(html, currentReader = 'import-book.html') {
   const importBookHref = readerHref(currentReader, 'import-book.html');
   let nextHtml = html;
+  nextHtml = nextHtml.replace('margin-inline-end: 40px;', 'margin-inline-end: 50px;');
   if (!nextHtml.includes('max-block-size: 520px')) {
     nextHtml = nextHtml.replace(
       '    .book-selector,\n    .chapter-selector {\n      display: flex;\n      flex-direction: column;\n      align-items: stretch;\n      gap: 8px;\n    }',
@@ -1231,11 +1355,7 @@ function ensureImportShell(html, currentReader = 'import-book.html') {
       );
   }
 
-  if (!nextHtml.includes('function openBookImport()')) {
-    nextHtml = nextHtml.replace('\n</body>', `\n${renderImportLauncherScript(importBookHref)}\n</body>`);
-  } else if (nextHtml.includes("window.location.href = './import-book.html'") && importBookHref !== './import-book.html') {
-    nextHtml = nextHtml.replaceAll("window.location.href = './import-book.html'", `window.location.href = '${importBookHref}'`);
-  }
+  nextHtml = replaceImportLauncherScript(nextHtml, importBookHref);
 
   return nextHtml;
 }
@@ -1258,6 +1378,7 @@ function syncExistingSidebars(manifest, dryRun = false) {
       }
     }
   }
+  if (!dryRun) writeRootIndex(manifest);
   return synced;
 }
 
@@ -1335,6 +1456,7 @@ function main() {
   }
 
   writeJson(MANIFEST_PATH, manifest);
+  writeRootIndex(manifest);
   writeBookMetadata(book);
   writeBookIndex(book);
 

@@ -34,8 +34,8 @@ shijinduan-book/
 | --- | --- |
 | `DESIGN.md` | 正式設計系統與驗收規則 |
 | `books.json` | 書庫與章回清單，自動化生成與側欄同步依此執行 |
-| `preview.html` | 設計系統預覽頁 |
-| `ancient_book-v2.html` | 正式版視覺樣張 |
+| `archive/preview.html` | 歷史預覽頁，僅歸檔，不作設計權威 |
+| `archive/ancient_book-v2.html` | 歷史視覺樣張，僅歸檔，不作正式輸出 |
 | `books/shijinduan/` | 《十景緞》正式閱讀版 |
 | `books/jinpingmei/` | 《金瓶梅詞話》正式閱讀版 |
 | `tools/import-book.js` | 從 Markdown 導入新書並生成 reader/data |
@@ -103,7 +103,7 @@ http://127.0.0.1:8787/import-book.html
 
 - `--limit 3`：只生成前三章，適合先做樣章。
 - `--start 5 --limit 1`：從第五章開始，只生成一章。
-- `--force`：覆蓋已存在的同名 reader/data，只有明確要重生時使用。
+- `--force`：覆蓋已存在的同名 reader/data；介面導入時需勾選「覆蓋既有同 slug 書籍」。
 - `--sync-existing`：同步既有正式頁的左側書目與章回側欄。
 
 ## 自查驗證
@@ -123,9 +123,17 @@ node tools/verify-readers.js --browser
 驗證器會檢查：
 
 - `books.json` 中 reader/data 是否存在。
+- `index.html` 是否依 `books.json` 連到每本書入口。
+- 根目錄是否只保留正式入口 HTML，歷史樣張需歸檔。
 - data 與 inline script 是否可編譯。
+- data 書名、章名是否與 `books.json` 一致。
+- Book Core 首選字體是否仍為 `Huiwen-mincho` / `汇文明朝体`。
 - 正文字號是否維持 `17px`。
 - 欄數設定是否維持左右各五欄。
+- 書頁尺寸是否維持 `480px × 720px`。
+- 側欄與書頁距離是否維持 `50px`。
+- 前置篇天頭與魚尾短題是否維持 `序`。
+- 添加新書入口是否使用遞迴資料夾掃描。
 - 懸掛標點是否使用 `translateY(-0.25em)`。
 - 每頁是否只有一個當前書目與一個當前章回。
 - Chromium 抽測是否能完成沙盒分頁並渲染左右五欄。
@@ -145,7 +153,6 @@ node tools/verify-readers.js --browser
 - 首頁：`index.html`（書目入口）
 - 金瓶梅：`books/jinpingmei/`
 - 十景緞：`books/shijinduan/`
-- 十景緞：`shijinduan-000-reader.html`
 
 首次使用請在 GitHub repo 的 **Settings → Pages → Build and deployment** 中，將 Source 設為 **GitHub Actions**。
 

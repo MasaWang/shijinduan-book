@@ -98,7 +98,7 @@
       align-items: stretch;
       gap: 18px;
       min-width: 124px;
-      margin-inline-end: 40px;
+      margin-inline-end: 50px;
     }
 
     .book-selector,
@@ -940,38 +940,47 @@
     init();
   </script>
   <script>
+    async function scanBookImportDirectory(handle, prefix = '') {
+      const files = [];
+      for await (const [name, child] of handle.entries()) {
+        if (child.kind === 'directory') {
+          files.push(...await scanBookImportDirectory(child, `${prefix}${name}/`));
+          continue;
+        }
+        if (!/\.m(?:d|arkdown)$/i.test(name)) continue;
+        const file = await child.getFile();
+        const text = await file.text();
+        const chapters = (text.match(/^#{2,6}\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\s*.*$/gmu) || []).length;
+        files.push({
+          name: `${prefix}${name}`,
+          size: file.size,
+          chapters,
+          modified: file.lastModified,
+          text,
+        });
+      }
+      return files;
+    }
+
     async function openBookImport() {
       if (!window.showDirectoryPicker) {
-        window.location.href = '../import-book.html';
+        window.location.href = '../../import-book.html';
         return;
       }
 
       try {
         const directoryHandle = await window.showDirectoryPicker({ mode: 'read' });
-        const markdownFiles = [];
-        for await (const [name, handle] of directoryHandle.entries()) {
-          if (handle.kind !== 'file' || !/\.m(?:d|arkdown)$/i.test(name)) continue;
-          const file = await handle.getFile();
-          const text = await file.text();
-          const chapters = (text.match(/^#{2,6}\s+(?:第[一二三四五六七八九十百千〇零兩]+[回章卷]|卷[一二三四五六七八九十百千〇零兩]+)\s*.*$/gmu) || []).length;
-          markdownFiles.push({
-            name,
-            size: file.size,
-            chapters,
-            modified: file.lastModified,
-            text,
-          });
-        }
+        const markdownFiles = await scanBookImportDirectory(directoryHandle);
 
         window.sessionStorage.setItem('pendingBookImport', JSON.stringify({
           folderName: directoryHandle.name,
           files: markdownFiles,
         }));
-        window.location.href = '../import-book.html';
+        window.location.href = '../../import-book.html';
       } catch (error) {
         if (error && error.name === 'AbortError') return;
         window.sessionStorage.setItem('pendingBookImportError', error && error.message ? error.message : String(error));
-        window.location.href = '../import-book.html';
+        window.location.href = '../../import-book.html';
       }
     }
 
